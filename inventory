@@ -1,11 +1,7 @@
-[wlx]
-192.168.18.100
-192.168.18.101
+[actone]
+192.168.31.132
 
 [all:vars]
-ansible_ssh_user=actimize
-ansible_ssh_pass=P@ssw0rd
-ansible_become_pass=P@ssw0rd
-ansible_become=false
-wlx_ais_user=admin
-wlx_ais_pass=password
+ansible_user=actimize
+ansible_ssh_private_key_file=/root/ubuntu-wsl-nopass
+ansible_become=true
