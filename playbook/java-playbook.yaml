@@ -29,7 +29,7 @@
           export JAVA_HOME=/opt/zulu/zulu11.48.22-sa-jdk11.0.11-linux_x64
           export PATH=$JAVA_HOME/bin:$PATH
         mode: '0755'
-        
+
     - name: Check JAVA version
       ansible.builtin.shell: source /etc/profile.d/java.sh && java -version
       register: java_version
@@ -37,4 +37,4 @@
 
     - name: Show Java Version
       debug:
-        var: java_version.stdout_lines
+        var: java_version.stderr_lines
