@@ -1,0 +1,40 @@
+---
+- name: Install JDK Zulu
+  hosts: actone
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Download Zulu OpenJDK 11
+      ansible.builtin.get_url:
+        url: https://cdn.azul.com/zulu/bin/zulu11.48.21-ca-jdk11.0.11-linux_x64.tar.gz
+        dest: /tmp/zulu11.tar.gz
+        mode: '0644'
+
+    - name: Ensure /opt/zulu directory exists
+      ansible.builtin.file:
+        path: /opt/zulu
+        state: directory
+        mode: '0755'
+        
+    - name: Extract JDK to /opt/zulu
+      ansible.builtin.unarchive:
+        src: /tmp/zulu11.tar.gz
+        dest: /opt/zulu
+        remote_src: yes
+
+    - name: Create and set JAVA_HOME PATH in /etc/profile.d/java.sh
+      ansible.builtin.copy:
+        dest: /etc/profile.d/java.sh
+        content: |
+          export JAVA_HOME=/opt/zulu/zulu11.48.22-sa-jdk11.0.11-linux_x64
+          export PATH=$JAVA_HOME/bin:$PATH
+        mode: '0755'
+        
+    - name: Check JAVA version
+      ansible.builtin.shell: source /etc/profile.d/java.sh && java -version
+      register: java_version
+      changed_when: false
+
+    - name: Show Java Version
+      debug:
+        var: java_version.stdout_lines

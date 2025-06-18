@@ -1,9 +1,0 @@
----
-- name: Copy file to AIS Linux server
-  hosts: wlx
-  become: yes  # jika butuh akses root
-  tasks:
-    - name: Copy a file to ~/installer directory
-      copy:
-        src: ../installer/ais-wlx-installer.zip     # file lokal di mesin Ansible controller
-        dest: ~/installer/ais-wlx-installer.zip           # lokasi tujuan di server target

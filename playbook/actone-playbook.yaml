@@ -1,0 +1,26 @@
+---
+- name: Install ActOne
+  hosts: actone
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Ping server
+      ansible.builtin.ping:
+
+    - name: Copy ActOne installer file to server
+      ansible.builtin.copy:
+        remote_src: false
+        src: "{{ playbook_dir }}/../actone-installer"
+        dest: /home/actimize/Downloads
+        mode: '0644'
+
+    - name: Copy ActOne.war into Tomcat Webapp
+      ansible.builtin.copy:
+        remote_src: true
+        src: "/home/actimize/Downloads/actone-installer/{{ item }}"
+        dest: "/opt/apache-tomcat-9.0.106/webapps/{{ item | basename }}"
+        mode: '0644'
+      loop:
+        - acm.ini
+        - actone.lic
+        - ACTONE.war
