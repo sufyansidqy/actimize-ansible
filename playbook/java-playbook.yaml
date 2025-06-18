@@ -26,7 +26,7 @@
       ansible.builtin.copy:
         dest: /etc/profile.d/java.sh
         content: |
-          export JAVA_HOME=/opt/zulu/zulu11.48.22-sa-jdk11.0.11-linux_x64
+          export JAVA_HOME=/opt/zulu/zulu11.48.21-ca-jdk11.0.11-linux_x64
           export PATH=$JAVA_HOME/bin:$PATH
         mode: '0755'
 

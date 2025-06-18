@@ -14,10 +14,9 @@
     - name: Extract Tomcat
       ansible.builtin.unarchive:
         src: /tmp/apache-tomcat-9.0.106.tar.gz
-        dest: /opt/
+        dest: /opt
         remote_src: yes
-        creates: /opt/apache-tomcat-9.0.106
-        mode: 0744
+        mode: 0777
     
     - name: Create Tomcat systemd service unit file
       ansible.builtin.copy:
@@ -26,26 +25,21 @@
           [Unit]
           Description=Apache Tomcat Web Application Container
           After=network.target
-
+          
           [Service]
           Type=forking
-
-          Environment=JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+          
+          User=actimize
+          Group=actimize
+          Environment=JAVA_HOME=/opt/zulu/zulu11.48.21-ca-jdk11.0.11-linux_x64
           Environment=CATALINA_PID=/opt/apache-tomcat-9.0.106/temp/tomcat.pid
           Environment=CATALINA_HOME=/opt/apache-tomcat-9.0.106
           Environment=CATALINA_BASE=/opt/apache-tomcat-9.0.106
-          Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
-          Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
-
           ExecStart=/opt/apache-tomcat-9.0.106/bin/startup.sh
           ExecStop=/opt/apache-tomcat-9.0.106/bin/shutdown.sh
-
-          User=actimize
-          Group=actimize
-          UMask=0007
-          RestartSec=10
           Restart=always
-
+          LimitNOFILE=8192
+          
           [Install]
           WantedBy=multi-user.target
         mode: '0777'

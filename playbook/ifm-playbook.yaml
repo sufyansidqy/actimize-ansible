@@ -36,18 +36,18 @@
         regexp: '^-V instancesInstallLocation=.*'
         replace: '-V instancesInstallLocation="/opt/actimize/ais_server/Instances"'
 
-    - name: Config silent installation - instance name
+    - name: Config silent installation - set instance name 'IFM'
       ansible.builtin.replace:
         path: /home/actimize/Downloads/ifm-installer/AIS_10.1.0_full_linux/Server_Linux_64bit/server/silent_installation_linux.txt
         regexp: '^-V instanceName=.*'
         replace: '-V instanceName="IFM"'
 
-    - name: Silent install AIS-IFM server
+    - name: Silent install AIS server
       ansible.builtin.command: ./setupLinux.bin -options silent_installation_linux.txt -silent
       args:
         chdir: /home/actimize/Downloads/ifm-installer/AIS_10.1.0_full_linux/Server_Linux_64bit/server
     
-    - name: Start AIS-IFM server
+    - name: Start AIS server
       ansible.builtin.command: ./ais_start
       args:
         chdir: /opt/actimize/ais_server/Instances/IFM
