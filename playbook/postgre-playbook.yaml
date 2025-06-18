@@ -5,15 +5,18 @@
   gather_facts: no
 
   tasks:
+    - name: Import PostgreSQL GPG key
+      ansible.builtin.rpm_key:
+        state: present
+        key: https://download.postgresql.org/pub/repos/yum/keys/PGDG-RPM-GPG-KEY-RHEL
+
     - name: Install PostgreSQL YUM Repository
       ansible.builtin.dnf:
         name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
         state: present
 
-    - name: Disable built-in PostgreSQL module
-      ansible.builtin.command: dnf -qy module disable postgresql
-      args:
-        warn: false
+#    - name: Disable built-in PostgreSQL module
+#      ansible.builtin.shell: dnf -qy module disable postgresql
 
     - name: Install PostgreSQL 16 packages
       ansible.builtin.dnf:
@@ -23,7 +26,7 @@
         state: present
 
     - name: Initialize PostgreSQL Database
-      ansible.builtin.command: /usr/pgsql-16/bin/postgresql-16-setup initdb
+      ansible.builtin.shell: /usr/pgsql-16/bin/postgresql-16-setup initdb
       args:
         creates: /var/lib/pgsql/16/data/PG_VERSION
 
@@ -42,6 +45,11 @@
       ansible.builtin.debug:
         var: postgres_version.stdout
 
+    - name: Install psycopg2 library from RPM
+      ansible.builtin.dnf:
+        name: python3-psycopg2
+        state: present
+        
     - name: Create testuser in PostgreSQL
       become_user: postgres
       ansible.builtin.postgresql_user:
