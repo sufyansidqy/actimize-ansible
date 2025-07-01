@@ -56,3 +56,32 @@
         name: testuser
         password: password
         role_attr_flags: SUPERUSER
+    
+    - name: Set listen_addresses to '*' in postgresql.conf
+      ansible.builtin.lineinfile:
+        path: /var/lib/pgsql/16/data/postgresql.conf
+        regexp: '^#?listen_addresses\s*='
+        line: "listen_addresses = '*'"
+        state: present
+        backup: yes
+
+    - name: Allow remote connections from client in pg_hba.conf (0.0.0.0/0)
+      ansible.builtin.blockinfile:
+        path: /var/lib/pgsql/16/data/pg_hba.conf
+        marker: "# {mark} ANSIBLE MANAGED BLOCK - allow remote access"
+        block: |
+          host    all             all             0.0.0.0/0         md5
+
+    - name: Ensure PostgreSQL is restarted
+      ansible.builtin.systemd:
+        name: postgresql-16
+        state: restarted
+        enabled: yes
+
+    - name: Open firewall port 5432
+      ansible.builtin.firewalld:
+        port: 5432/tcp
+        permanent: true
+        state: enabled
+        immediate: yes
+        zone: public
