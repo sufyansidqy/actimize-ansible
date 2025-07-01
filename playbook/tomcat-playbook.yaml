@@ -9,7 +9,6 @@
         url: https://downloads.apache.org/tomcat/tomcat-9/v9.0.106/bin/apache-tomcat-9.0.106.tar.gz
         dest: /tmp/apache-tomcat-9.0.106.tar.gz
         mode: '0644'
-      register: download_tomcat
 
     - name: Extract Tomcat
       ansible.builtin.unarchive:
@@ -17,7 +16,14 @@
         dest: /opt
         remote_src: yes
         mode: 0777
-    
+
+    - name: Set ownership of Tomcat directory to actimize
+      ansible.builtin.file:
+        path: /opt/apache-tomcat-9.0.106
+        owner: actimize
+        group: actimize
+        recurse: yes
+
     - name: Create Tomcat systemd service unit file
       ansible.builtin.copy:
         dest: /etc/systemd/system/tomcat.service
@@ -42,9 +48,18 @@
           
           [Install]
           WantedBy=multi-user.target
-        mode: '0777'
+        mode: '0644'
 
-    - name: Reload Tomcat systemd daemon
+    - name: Ensure Tomcat uses IPv4 stack
+      ansible.builtin.copy:
+        dest: /opt/apache-tomcat-9.0.106/bin/setenv.sh
+        content: |
+          export JAVA_OPTS="-Djava.net.preferIPv4Stack=true"
+        owner: actimize
+        group: actimize
+        mode: '0755'
+
+    - name: Reload systemd daemon
       ansible.builtin.systemd:
         daemon_reload: yes
 
@@ -57,3 +72,11 @@
       ansible.builtin.systemd:
         name: tomcat
         state: started
+
+    - name: Open firewall port 8080
+      ansible.builtin.firewalld:
+        port: 8080/tcp
+        permanent: true
+        state: enabled
+        immediate: yes
+        zone: public
