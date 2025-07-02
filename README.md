@@ -5,3 +5,8 @@ ansible actone -i inventory -m ping
 
 # run playbook
 ansible-playbook -i inventory playbook/tomcat-playbook.yaml
+
+# install actone
+1. Make sure postgre playbook executed
+2. Make sure tomcat playbook excecuted
+3. Make sure actone playbook executed

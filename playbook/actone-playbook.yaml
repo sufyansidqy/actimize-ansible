@@ -14,13 +14,31 @@
         dest: /home/actimize/Downloads
         mode: '0644'
 
-    - name: Copy ActOne.war into Tomcat Webapp
+    - name: Extract ActOne Installer
+      ansible.builtin.unarchive:
+        src: /home/actimize/Downloads/actone-installer/ActOne-10.1.0-2024-12-15-12-19.zip
+        dest: /home/actimize/Downloads/actone-installer
+        remote_src: yes
+        mode: 0777
+
+    - name: Copy configured conf file to installer
+      ansible.builtin.copy:
+        remote_src: true
+        src: /home/actimize/Downloads/actone-installer/conf
+        dest: /home/actimize/Downloads/actone-installer/Installer
+        mode: '0644'
+
+    - name: Copy license file into Tomcat Webapp
       ansible.builtin.copy:
         remote_src: true
         src: "/home/actimize/Downloads/actone-installer/{{ item }}"
         dest: "/opt/apache-tomcat-9.0.106/webapps/{{ item | basename }}"
         mode: '0644'
       loop:
-        - acm.ini
         - actone.lic
-        - ACTONE.war
+
+    - name: Install ActOne
+      ansible.builtin.shell: |
+        echo "Mulai install ActOne"
+        /home/actimize/Downloads/actone-installer/Installer/bin/rcm-installer.sh install
+
