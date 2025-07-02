@@ -5,7 +5,7 @@
   become: yes
   tasks:
     - name: Check JAVA version
-      ansible.builtin.shell: source /etc/profile.d/java.sh && java -version
+      ansible.builtin.shell: . /etc/profile.d/java.sh && java -version
       register: java_version
       changed_when: false
 
