@@ -1,6 +1,9 @@
 [actone]
 192.168.31.132
 
+[local]
+localhost ansible_connection=local
+
 [all:vars]
 ansible_user=actimize
 ansible_ssh_private_key_file=/root/ubuntu-wsl-nopass
