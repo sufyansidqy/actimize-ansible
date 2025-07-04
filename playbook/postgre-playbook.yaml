@@ -85,3 +85,30 @@
         state: enabled
         immediate: yes
         zone: public
+
+    - name: Create 'actimize' PostgreSQL user if it doesn't exist
+      become_user: postgres
+      ansible.builtin.postgresql_user:
+        name: actimize
+        password: P@ssw0rd
+        role_attr_flags: CREATEDB,LOGIN
+        state: present
+
+    - name: Create 'actimize' database if it doesn't exist
+      become_user: postgres
+      ansible.builtin.postgresql_db:
+        name: actimize
+        state: present
+
+    - name: Install PostgreSQL contrib package for dblink on OS level
+      ansible.builtin.dnf:
+        name: postgresql16-contrib
+        state: present
+
+    - name: Install dblink extension on DB level
+      become: true
+      become_user: postgres
+      ansible.builtin.shell: |
+        /usr/pgsql-16/bin/psql -d actimize -c "CREATE EXTENSION IF NOT EXISTS dblink;"
+      args:
+        executable: /bin/bash

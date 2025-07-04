@@ -10,35 +10,43 @@
     - name: Copy ActOne installer file to server
       ansible.builtin.copy:
         remote_src: false
-        src: "{{ playbook_dir }}/../actone-installer"
+        src: "{{ playbook_dir }}/../installer-actone"
         dest: /home/actimize/Downloads
         mode: '0644'
 
     - name: Extract ActOne Installer
       ansible.builtin.unarchive:
-        src: /home/actimize/Downloads/actone-installer/ActOne-10.1.0-2024-12-15-12-19.zip
-        dest: /home/actimize/Downloads/actone-installer
+        src: /home/actimize/Downloads/installer-actone/ActOne-10.1.0-2024-12-15-12-19.zip
+        dest: /home/actimize/Downloads/installer-actone
         remote_src: yes
         mode: 0777
 
     - name: Copy configured conf file to installer
       ansible.builtin.copy:
         remote_src: true
-        src: /home/actimize/Downloads/actone-installer/conf
-        dest: /home/actimize/Downloads/actone-installer/Installer
-        mode: '0644'
+        src: /home/actimize/Downloads/installer-actone/conf/Installer/conf
+        dest: /home/actimize/Downloads/installer-actone/Installer
+        mode: '0777'
 
     - name: Copy license file into Tomcat Webapp
       ansible.builtin.copy:
         remote_src: true
-        src: "/home/actimize/Downloads/actone-installer/{{ item }}"
+        src: "/home/actimize/Downloads/installer-actone/{{ item }}"
         dest: "/opt/apache-tomcat-9.0.106/webapps/{{ item | basename }}"
-        mode: '0644'
+        mode: '0777'
       loop:
         - actone.lic
 
     - name: Install ActOne
       ansible.builtin.shell: |
-        echo "Mulai install ActOne"
-        /home/actimize/Downloads/actone-installer/Installer/bin/rcm-installer.sh install
+        echo "Start install ActOne"
+        cd /home/actimize/Downloads/installer-actone/Installer/bin
+        ./rcm-installer.sh install
 
+    - name: Install Entity Insight
+      ansible.builtin.shell: |
+        echo "Start install Entity Insight"
+
+    - name: Install Widget Library
+      ansible.builtin.shell: |
+        echo "Start install Widget Library"
