@@ -1,5 +1,5 @@
 ---
-- name: Install IFM
+- name: Install IFM 11
   hosts: actone
   gather_facts: no
   become: yes
@@ -10,48 +10,25 @@
     - name: Copy IFM installer file to server
       ansible.builtin.copy:
         remote_src: false
-        src: "{{ playbook_dir }}/../ifm-installer"
+        src: "{{ playbook_dir }}/../installer-ifm"
         dest: /home/actimize/Downloads
         mode: '0644'
 
     - name: Unzip installer
       ansible.builtin.unarchive:
-        src: "/home/actimize/Downloads/ifm-installer/{{ item }}"
-        dest: /home/actimize/Downloads/ifm-installer
+        src: "/home/actimize/Downloads/installer-ifm/{{ item }}"
+        dest: /home/actimize/Downloads/installer-ifm
         remote_src: yes
         mode: 0777
       loop:
-        - AIS-10.1.0-Linux-2023-11.zip
         - IFM-11.0.0-2024-06.zip
 
-    - name: Config silent installation - install ais server location
-      ansible.builtin.replace:
-        path: /home/actimize/Downloads/ifm-installer/AIS_10.1.0_full_linux/Server_Linux_64bit/server/silent_installation_linux.txt
-        regexp: '^-P installLocation=.*'
-        replace: '-P installLocation="/opt/actimize/ais_server"'
-    
-    - name: Config silent installation - install instance location
-      ansible.builtin.replace:
-        path: /home/actimize/Downloads/ifm-installer/AIS_10.1.0_full_linux/Server_Linux_64bit/server/silent_installation_linux.txt
-        regexp: '^-V instancesInstallLocation=.*'
-        replace: '-V instancesInstallLocation="/opt/actimize/ais_server/Instances"'
-
-    - name: Config silent installation - set instance name 'IFM'
-      ansible.builtin.replace:
-        path: /home/actimize/Downloads/ifm-installer/AIS_10.1.0_full_linux/Server_Linux_64bit/server/silent_installation_linux.txt
-        regexp: '^-V instanceName=.*'
-        replace: '-V instanceName="IFM"'
-
-    - name: Silent install AIS server
-      ansible.builtin.command: ./setupLinux.bin -options silent_installation_linux.txt -silent
-      args:
-        chdir: /home/actimize/Downloads/ifm-installer/AIS_10.1.0_full_linux/Server_Linux_64bit/server
-    
-    - name: Start AIS server
-      ansible.builtin.command: ./ais_start
-      args:
-        chdir: /opt/actimize/ais_server/Instances/IFM
-
+    - name: Copy configured conf file to installer
+      ansible.builtin.copy:
+        remote_src: true
+        src: /home/actimize/Downloads/installer-actone/conf/Installer/conf
+        dest: /home/actimize/Downloads/installer-actone/Installer
+        mode: '0777'
 #    - name: Config IFM conf file
 
 #    - name: Run IFM installer

@@ -1,0 +1,52 @@
+---
+- name: Install AIS 10.1
+  hosts: actone
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Ping server
+      ansible.builtin.ping:
+    
+    - name: Copy AIS installer file to server
+      ansible.builtin.copy:
+        remote_src: false
+        src: "{{ playbook_dir }}/../installer-ais"
+        dest: /home/actimize/Downloads
+        mode: 0777
+
+    - name: Unzip installer
+      ansible.builtin.unarchive:
+        src: "/home/actimize/Downloads/installer-ais/{{ item }}"
+        dest: /home/actimize/Downloads/installer-ais
+        remote_src: yes
+        mode: 0777
+      loop:
+        - AIS-10.1.0-Linux-2023-11.zip
+
+    - name: Config silent installation - install ais server location
+      ansible.builtin.replace:
+        path: /home/actimize/Downloads/installer-ais/AIS_10.1.0_full_linux/Server_Linux_64bit/server/silent_installation_linux.txt
+        regexp: '^-P installLocation=.*'
+        replace: '-P installLocation="/opt/actimize/ais_server"'
+    
+    - name: Config silent installation - install instance location
+      ansible.builtin.replace:
+        path: /home/actimize/Downloads/installer-ais/AIS_10.1.0_full_linux/Server_Linux_64bit/server/silent_installation_linux.txt
+        regexp: '^-V instancesInstallLocation=.*'
+        replace: '-V instancesInstallLocation="/opt/actimize/ais_server/Instances"'
+
+    - name: Config silent installation - set instance name 'IFM'
+      ansible.builtin.replace:
+        path: /home/actimize/Downloads/installer-ais/AIS_10.1.0_full_linux/Server_Linux_64bit/server/silent_installation_linux.txt
+        regexp: '^-V instanceName=.*'
+        replace: '-V instanceName="IFM"'
+
+    - name: Silent install AIS server
+      ansible.builtin.command: ./setupLinux.bin -options silent_installation_linux.txt -silent
+      args:
+        chdir: /home/actimize/Downloads/installer-ais/AIS_10.1.0_full_linux/Server_Linux_64bit/server
+    
+    - name: Start AIS server
+      ansible.builtin.command: ./ais_start
+      args:
+        chdir: /opt/actimize/ais_server/Instances/IFM

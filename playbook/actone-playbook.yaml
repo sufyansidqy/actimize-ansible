@@ -1,5 +1,5 @@
 ---
-- name: Install ActOne
+- name: Install ActOne 10.1
   hosts: actone
   gather_facts: no
   become: yes
