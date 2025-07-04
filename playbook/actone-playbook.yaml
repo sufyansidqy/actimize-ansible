@@ -28,14 +28,32 @@
         dest: /home/actimize/Downloads/installer-actone/Installer
         mode: '0777'
 
-    - name: Copy license file into Tomcat Webapp
+    - name: Create actone_work_dir directory if it doesn't exist
+      ansible.builtin.file:
+        path: /home/actimize/actone_work_dir/license
+        state: directory
+        owner: actimize
+        group: actimize
+        mode: '0755'
+
+    - name: Copy license file into actone_work_dir 
       ansible.builtin.copy:
         remote_src: true
         src: "/home/actimize/Downloads/installer-actone/{{ item }}"
-        dest: "/opt/apache-tomcat-9.0.106/webapps/{{ item | basename }}"
+        dest: "/home/actimize/actone_work_dir/license/{{ item | basename }}"
         mode: '0777'
       loop:
         - actone.lic
+
+    - name: Set JAVA_OPTS in setenv.sh for acm.ini
+      ansible.builtin.blockinfile:
+        path: /opt/apache-tomcat-9.0.106/bin/setenv.sh
+        create: yes
+        mode: '0755'
+        block: |
+          # Ansible managed JAVA_OPTS
+          export CATALINA_OPTS="$CATALINA_OPTS -Xms512m -Xmx2048m -XX:+UseG1GC -Djava.security.egd=file:/dev/./urandom"
+          export CATALINA_OPTS="$CATALINA_OPTS -Dactimize.ini.location=/opt/apache-tomcat-9.0.106/bin/acm.ini"
 
     - name: Install ActOne
       ansible.builtin.shell: |
@@ -50,3 +68,18 @@
     - name: Install Widget Library
       ansible.builtin.shell: |
         echo "Start install Widget Library"
+
+    - name: Set ownership and permissions for Tomcat directory
+      ansible.builtin.file:
+        path: /opt/apache-tomcat-9.0.106
+        state: directory
+        recurse: yes
+        owner: actimize
+        group: actimize
+        mode: '0775'
+
+    - name: Restart Tomcat service
+      ansible.builtin.systemd:
+        name: tomcat
+        state: restarted
+        enabled: yes
