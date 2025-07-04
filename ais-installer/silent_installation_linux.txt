@@ -1,0 +1,29 @@
+# This file is used to configure the silent installation with the settings
+# that are specified after this commented section.
+# The settings are used when the launcher runs via the "-options" command. 
+# 
+# A silent installation provides you with the option to specify configuration
+# settings without having to run the installer in a graphical or a console mode. 
+#
+# Use the following command line on Linux based machines:
+#
+# ./setupLinux.bin -options silent_installation_linux.txt -silent
+#
+#===============================================================================
+# Installation settings:
+#===============================================================================
+
+-P installLocation="/home/actimize/ais_server"
+
+-V instancesInstallLocation="/home/actimize/ais_server/Instances"
+
+-V instanceName="CB"
+
+-V groupName=""
+
+-V licenseSource="/home/actimize/license/license.lic"
+
+-G replaceExistingResponse="yesToAll"
+
+-G replaceNewerResponse="yesToAll"
+
