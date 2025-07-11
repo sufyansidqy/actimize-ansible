@@ -7,32 +7,40 @@
     - name: Ping server
       ansible.builtin.ping:
     
-    - name: Copy IFM installer file to server
-      ansible.builtin.copy:
-        remote_src: false
-        src: "{{ playbook_dir }}/../installer-ifm"
-        dest: /home/actimize/Downloads
-        mode: '0644'
+    # - name: Copy IFM installer file to server
+    #   ansible.builtin.copy:
+    #     remote_src: false
+    #     src: "{{ playbook_dir }}/../installer-ifm"
+    #     dest: /home/actimize/Downloads
+    #     mode: 0777
 
-    - name: Unzip installer
-      ansible.builtin.unarchive:
-        src: "/home/actimize/Downloads/installer-ifm/{{ item }}"
-        dest: /home/actimize/Downloads/installer-ifm
-        remote_src: yes
-        mode: 0777
-      loop:
-        - IFM-11.0.0-2024-06.zip
+    # - name: Unzip installer
+    #   ansible.builtin.unarchive:
+    #     src: "/home/actimize/Downloads/installer-ifm/{{ item }}"
+    #     dest: /home/actimize/Downloads/installer-ifm
+    #     remote_src: yes
+    #     mode: 0777
+    #   loop:
+    #     - IFM-11.0.0-2024-06.zip
 
-    - name: Copy configured conf file to installer
-      ansible.builtin.copy:
-        remote_src: true
-        src: /home/actimize/Downloads/installer-actone/conf/Installer/conf
-        dest: /home/actimize/Downloads/installer-actone/Installer
-        mode: '0777'
-#    - name: Config IFM conf file
+    # - name: Copy configured conf file to installer
+    #   ansible.builtin.copy:
+    #     remote_src: true
+    #     src: /home/actimize/Downloads/installer-ifm/conf
+    #     dest: /home/actimize/Downloads/installer-ifm/FF_11.0.0.6/Installer
+    #     mode: '0777'
 
-#    - name: Run IFM installer
+    # - name: Run IFM installer - IFM-DB Scripts Steps
+    #   ansible.builtin.shell: |
+    #     echo "Start install IFM-DB Scripts Steps"
+    #     cd /home/actimize/Downloads/installer-ifm/FF_11.0.0.6/Installer/bin
+    #     ./actimize-installer install -i "DB Scripts Steps"
 
+    - name: Run IFM installer - IFM-AIS Steps
+      ansible.builtin.shell: |
+        echo "Start install IFM-AIS Steps"
+        cd /home/actimize/Downloads/installer-ifm/FF_11.0.0.6/Installer/bin
+        ./actimize-installer install -i "AIS Steps"
 #    - name: Restart AIS-IFM server
     
 #    - name: Test AIS-IFM connector

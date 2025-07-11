@@ -1,0 +1,59 @@
+- name: Setup Java 8 khusus untuk DSE
+  hosts: actone
+  become: true
+  vars:
+    java8_url: "https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u382-b05/OpenJDK8U-jdk_x64_linux_hotspot_8u382b05.tar.gz"
+    java8_archive: /tmp/java8.tar.gz
+    java8_home: /opt/java8
+    dse_home: /opt/dse-6.8.59
+
+  tasks:
+
+    - name: Pastikan curl terinstall
+      package:
+        name: curl
+        state: present
+
+    - name: Download OpenJDK 8 dari Adoptium
+      get_url:
+        url: "{{ java8_url }}"
+        dest: "{{ java8_archive }}"
+        mode: '0644'
+        force: yes
+
+    - name: Buat direktori untuk Java 8
+      file:
+        path: "{{ java8_home }}"
+        state: directory
+        mode: '0755'
+
+    - name: Ekstrak Java 8 ke /opt/java8
+      unarchive:
+        src: "{{ java8_archive }}"
+        dest: "{{ java8_home }}"
+        remote_src: yes
+        extra_opts: [--strip-components=1]
+
+    - name: Set environment khusus untuk DSE
+      copy:
+        dest: /etc/profile.d/dse_env.sh
+        mode: '0755'
+        content: |
+          export JAVA_HOME={{ java8_home }}
+          export DSE_HOME={{ dse_home }}
+          export PATH=$JAVA_HOME/bin:$DSE_HOME/bin:$PATH
+
+    - name: Tes environment (opsional)
+      shell: |
+        source /etc/profile.d/dse_env.sh
+        echo "JAVA: $JAVA_HOME"
+        java -version
+      args:
+        executable: /bin/bash
+
+    - name: Jalankan DSE dengan Java 8 (opsional)
+      shell: |
+        source /etc/profile.d/dse_env.sh
+        nohup $DSE_HOME/bin/dse cassandra -R > /var/log/dse-java8.log 2>&1 &
+      async: 30
+      poll: 0

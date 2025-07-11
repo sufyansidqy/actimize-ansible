@@ -6,7 +6,59 @@
   tasks:
     - name: Ping server
       ansible.builtin.ping:
-    
+
+    # Tambahan: Install libodbc.so.1 dari source (unixODBC)
+    - name: Install build dependencies
+      ansible.builtin.yum:
+        name:
+          - gcc
+          - make
+          - wget
+          - tar
+        state: present
+
+    - name: Create build directory for unixODBC
+      ansible.builtin.file:
+        path: /opt/unixodbc-build
+        state: directory
+
+    - name: Download unixODBC source
+      ansible.builtin.get_url:
+        url: https://www.unixodbc.org/unixODBC-2.3.12.tar.gz
+        dest: /opt/unixodbc-build/unixODBC-2.3.12.tar.gz
+
+    - name: Extract unixODBC source
+      ansible.builtin.unarchive:
+        src: /opt/unixodbc-build/unixODBC-2.3.12.tar.gz
+        dest: /opt/unixodbc-build
+        remote_src: yes
+
+    - name: Configure unixODBC
+      ansible.builtin.command: ./configure --prefix=/opt/unixODBC
+      args:
+        chdir: /opt/unixodbc-build/unixODBC-2.3.12
+
+    - name: Build unixODBC
+      ansible.builtin.command: make
+      args:
+        chdir: /opt/unixodbc-build/unixODBC-2.3.12
+
+    - name: Install unixODBC
+      ansible.builtin.command: make install
+      args:
+        chdir: /opt/unixodbc-build/unixODBC-2.3.12
+
+    - name: Link libodbc.so.1 to system-wide lib path (optional)
+      ansible.builtin.file:
+        src: /opt/unixODBC/lib/libodbc.so.1
+        dest: /usr/lib64/libodbc.so.1
+        state: link
+        force: yes
+
+    - name: Verify libodbc is available
+      ansible.builtin.command: ls -l /usr/lib64/libodbc.so.1
+
+    # Lanjut dengan AIS setup
     - name: Copy AIS installer file to server
       ansible.builtin.copy:
         remote_src: false
@@ -28,7 +80,7 @@
         path: /home/actimize/Downloads/installer-ais/AIS_10.1.0_full_linux/Server_Linux_64bit/server/silent_installation_linux.txt
         regexp: '^-P installLocation=.*'
         replace: '-P installLocation="/opt/actimize/ais_server"'
-    
+
     - name: Config silent installation - install instance location
       ansible.builtin.replace:
         path: /home/actimize/Downloads/installer-ais/AIS_10.1.0_full_linux/Server_Linux_64bit/server/silent_installation_linux.txt
@@ -45,7 +97,7 @@
       ansible.builtin.command: ./setupLinux.bin -options silent_installation_linux.txt -silent
       args:
         chdir: /home/actimize/Downloads/installer-ais/AIS_10.1.0_full_linux/Server_Linux_64bit/server
-    
+
     - name: Start AIS server
       ansible.builtin.command: ./ais_start
       args:
