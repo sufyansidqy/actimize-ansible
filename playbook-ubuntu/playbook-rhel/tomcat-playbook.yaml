@@ -1,0 +1,100 @@
+---
+- name: Install Tomcat
+  hosts: actone
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Install Python if missing (via raw)
+      ansible.builtin.raw: |
+        if ! command -v python3 >/dev/null 2>&1; then
+          apt update && apt install -y python3
+        fi
+
+    - name: Ensure user actimize exists
+      ansible.builtin.user:
+        name: actimize
+        shell: /bin/bash
+        create_home: yes
+
+    - name: Download Tomcat 9.0.106
+      ansible.builtin.get_url:
+        url: https://downloads.apache.org/tomcat/tomcat-9/v9.0.106/bin/apache-tomcat-9.0.106.tar.gz
+        dest: /tmp/apache-tomcat-9.0.106.tar.gz
+        mode: '0644'
+
+    - name: Extract Tomcat
+      ansible.builtin.unarchive:
+        src: /tmp/apache-tomcat-9.0.106.tar.gz
+        dest: /opt
+        remote_src: yes
+        mode: 0777
+
+    - name: Ensure startup and shutdown scripts are executable
+      ansible.builtin.file:
+        path: "{{ item }}"
+        mode: '0755'
+      loop:
+        - /opt/apache-tomcat-9.0.106/bin/startup.sh
+        - /opt/apache-tomcat-9.0.106/bin/shutdown.sh
+
+    - name: Set ownership of Tomcat directory to actimize
+      ansible.builtin.file:
+        path: /opt/apache-tomcat-9.0.106
+        owner: actimize
+        group: actimize
+        recurse: yes
+
+    - name: Create Tomcat systemd service unit file
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/tomcat.service
+        content: |
+          [Unit]
+          Description=Apache Tomcat Web Application Container
+          After=network.target
+
+          [Service]
+          Type=forking
+
+          User=actimize
+          Group=actimize
+          Environment=JAVA_HOME=/opt/zulu/zulu11.48.21-ca-jdk11.0.11-linux_x64
+          Environment=CATALINA_PID=/opt/apache-tomcat-9.0.106/temp/tomcat.pid
+          Environment=CATALINA_HOME=/opt/apache-tomcat-9.0.106
+          Environment=CATALINA_BASE=/opt/apache-tomcat-9.0.106
+          ExecStart=/opt/apache-tomcat-9.0.106/bin/startup.sh
+          ExecStop=/opt/apache-tomcat-9.0.106/bin/shutdown.sh
+          Restart=always
+          LimitNOFILE=8192
+
+          [Install]
+          WantedBy=multi-user.target
+        mode: '0644'
+
+    - name: Ensure Tomcat uses IPv4 stack
+      ansible.builtin.copy:
+        dest: /opt/apache-tomcat-9.0.106/bin/setenv.sh
+        content: |
+          export JAVA_OPTS="-Djava.net.preferIPv4Stack=true"
+        owner: actimize
+        group: actimize
+        mode: '0755'
+
+    - name: Reload systemd daemon
+      ansible.builtin.systemd:
+        daemon_reload: yes
+
+    - name: Enable Tomcat service
+      ansible.builtin.systemd:
+        name: tomcat
+        enabled: yes
+
+    - name: Start Tomcat service
+      ansible.builtin.systemd:
+        name: tomcat
+        state: started
+
+    - name: Allow port 8080 in UFW
+      ansible.builtin.ufw:
+        rule: allow
+        port: '8080'
+        proto: tcp

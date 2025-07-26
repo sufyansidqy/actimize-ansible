@@ -1,0 +1,69 @@
+    - name: Initialize cluster with pg_createcluster
+      shell: pg_createcluster 16 main
+      args:
+        creates: /etc/postgresql/16/main/postgresql.conf
+
+    - name: Enable and start PostgreSQL service
+      systemd:
+        name: postgresql
+        enabled: yes
+        state: started
+
+    - name: Check PostgreSQL version
+      shell: psql --version
+      register: pg_version
+      changed_when: false
+
+    - debug:
+        var: pg_version.stdout
+
+    - name: Configure postgresql.conf to listen on all interfaces
+      lineinfile:
+        path: /etc/postgresql/16/main/postgresql.conf
+        regexp: '^#?listen_addresses'
+        line: "listen_addresses = '*'"
+        backup: yes
+
+    - name: Allow remote access in pg_hba.conf
+      blockinfile:
+        path: /etc/postgresql/16/main/pg_hba.conf
+        marker: "# {mark} ANSIBLE MANAGED - remote access"
+        block: |
+          host    all             all             0.0.0.0/0             scram-sha-256
+
+    - name: Restart PostgreSQL to apply config changes
+      systemd:
+        name: postgresql
+        state: restarted
+
+    - name: Create PostgreSQL user 'actimize'
+      become_user: postgres
+      postgresql_user:
+        name: actimize
+        password: "{{ 'P@ssw0rd' | password_hash('md5') }}"
+        role_attr_flags: CREATEDB,LOGIN
+        state: present
+
+    - name: Create database 'actimize'
+      become_user: postgres
+      postgresql_db:
+        name: actimize
+        state: present
+
+    - name: Install psycopg2 library via apt
+      apt:
+        name: python3-psycopg2
+        state: present
+
+    - name: Install dblink extension
+      become_user: postgres
+      postgresql_ext:
+        db: actimize
+        name: dblink
+        state: present
+
+    - name: Open firewall port 5432 via UFW
+      ufw:
+        rule: allow
+        port: '5432'
+        proto: tcp
