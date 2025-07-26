@@ -1,0 +1,103 @@
+---
+- name: Install and Configure PostgreSQL 16 on Ubuntu (No Ansible Collections)
+  hosts: actone
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Install dependencies
+      apt:
+        name:
+          - wget
+          - gnupg
+          - lsb-release
+        state: present
+        update_cache: yes
+
+    - name: Add PostgreSQL GPG key
+      apt_key:
+        url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+        state: present
+
+    - name: Add PostgreSQL APT repository
+      apt_repository:
+        repo: "deb http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main"
+        state: present
+        filename: "pgdg"
+
+    - name: Update APT cache
+      apt:
+        update_cache: yes
+
+    - name: Install PostgreSQL 16 and psycopg2
+      apt:
+        name:
+          - postgresql-16
+          - postgresql-client-16
+          - postgresql-contrib-16
+          - python3-psycopg2
+        state: present
+
+    - name: Ensure PostgreSQL service is running and enabled
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+
+    - name: Check PostgreSQL version
+      command: psql --version
+      register: postgres_version
+      changed_when: false
+
+    - name: Show PostgreSQL version
+      debug:
+        var: postgres_version.stdout
+
+    - name: Create testuser with SUPERUSER role
+      become_user: postgres
+      shell: |
+        psql -tc "SELECT 1 FROM pg_roles WHERE rolname='testuser'" | grep -q 1 || \
+        psql -c "CREATE ROLE testuser WITH LOGIN PASSWORD 'password' SUPERUSER;"
+
+    - name: Create actimize user with CREATEDB and LOGIN
+      become_user: postgres
+      shell: |
+        psql -tc "SELECT 1 FROM pg_roles WHERE rolname='actimize'" | grep -q 1 || \
+        psql -c "CREATE ROLE actimize WITH LOGIN PASSWORD 'P@ssw0rd' CREATEDB;"
+
+    - name: Create actimize database if not exists
+      become_user: postgres
+      shell: |
+        psql -tc "SELECT 1 FROM pg_database WHERE datname='actimize'" | grep -q 1 || \
+        createdb actimize
+
+    - name: Enable listen_addresses = '*'
+      lineinfile:
+        path: /etc/postgresql/16/main/postgresql.conf
+        regexp: '^#?listen_addresses\s*='
+        line: "listen_addresses = '*'"
+        backup: yes
+
+    - name: Allow remote connections from all hosts
+      blockinfile:
+        path: /etc/postgresql/16/main/pg_hba.conf
+        marker: "# {mark} ANSIBLE MANAGED BLOCK - allow remote access"
+        block: |
+          host    all             all             0.0.0.0/0               md5
+
+    - name: Restart PostgreSQL
+      systemd:
+        name: postgresql
+        state: restarted
+        enabled: yes
+
+    - name: Allow port 5432 via UFW (optional)
+      ufw:
+        rule: allow
+        port: 5432
+        proto: tcp
+
+    - name: Create dblink extension in actimize DB
+      become_user: postgres
+      shell: |
+        psql -d actimize -c "CREATE EXTENSION IF NOT EXISTS dblink;"
