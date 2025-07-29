@@ -1,0 +1,3 @@
+[workshop_vm]
+192.168.18.158 ansible_user=actimize ansible_ssh_pass=actimize
+

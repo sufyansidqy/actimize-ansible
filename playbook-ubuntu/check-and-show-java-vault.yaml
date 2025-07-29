@@ -1,0 +1,20 @@
+---
+- name: Check JDK Zulu version
+  hosts: workshop_vm
+  gather_facts: no
+  become: no
+  vars_files:
+    - ../vault.yaml
+
+  tasks:
+    - name: Ping server
+      ansible.builtin.ping:
+
+    - name: Check JAVA version
+      ansible.builtin.shell: java -version
+      register: java_version
+      changed_when: false
+
+    - name: Show Java Version
+      debug:
+        var: java_version.stderr_lines
