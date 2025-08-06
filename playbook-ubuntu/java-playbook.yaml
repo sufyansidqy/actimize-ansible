@@ -1,6 +1,6 @@
 ---
 - name: Install JDK Zulu
-  hosts: actone
+  hosts: workshop_vm
   gather_facts: no
   become: yes
   tasks:
@@ -35,6 +35,19 @@
           export JAVA_HOME=/opt/zulu/zulu11.48.21-ca-jdk11.0.11-linux_x64
           export PATH=$JAVA_HOME/bin:$PATH
         mode: '0755'
+
+    - name: Set JAVA_HOME in /etc/environment
+      ansible.builtin.lineinfile:
+        path: /etc/environment
+        line: 'JAVA_HOME=/opt/zulu/zulu11.48.21-ca-jdk11.0.11-linux_x64'
+        create: yes
+
+    - name: Add Java bin to PATH in /etc/environment
+      ansible.builtin.lineinfile:
+        path: /etc/environment
+        line: 'PATH="/opt/zulu/zulu11.48.21-ca-jdk11.0.11-linux_x64/bin:$PATH"'
+        insertafter: EOF
+        create: yes
 
     - name: Check JAVA version
       ansible.builtin.shell: source /etc/profile.d/java.sh && java -version

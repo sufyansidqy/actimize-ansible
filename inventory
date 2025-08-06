@@ -1,10 +1,11 @@
 [actone]
 192.168.31.132
 
-[workshop-vm]
-192.168.18.158
+[workshop_vm]
+192.168.18.158 ansible_remote_tmp=/tmp/.ansible
 
 [all:vars]
 ansible_user=actimize
-ansible_ssh_private_key_file=/root/ubuntu-wsl-nopass
+ansible_ssh_private_key_file=/home/sufyan/VisualStudio/actimize-ansible/host-cert/host-cert
 ansible_become=true
+
