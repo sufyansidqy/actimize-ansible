@@ -1,6 +1,6 @@
 ---
 - name: Install Tomcat
-  hosts: actone
+  hosts: workshop_vm
   gather_facts: no
   become: yes
   tasks:
@@ -18,13 +18,19 @@
 
     - name: Download Tomcat 9.0.106
       ansible.builtin.get_url:
-        url: https://downloads.apache.org/tomcat/tomcat-9/v9.0.106/bin/apache-tomcat-9.0.106.tar.gz
-        dest: /tmp/apache-tomcat-9.0.106.tar.gz
+      #  url: https://downloads.apache.org/tomcat/tomcat-9/v9.0.106/bin/apache-tomcat-9.0.106.tar.gz
+        url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.108/bin/apache-tomcat-9.0.108.tar.gz
+        dest: /tmp/apache-tomcat-9.0.108.tar.gz
         mode: '0644'
+
+    - name: Set /opt folder permissions to 777
+      ansible.builtin.file:
+        path: /opt
+        mode: '0777'
 
     - name: Extract Tomcat
       ansible.builtin.unarchive:
-        src: /tmp/apache-tomcat-9.0.106.tar.gz
+        src: /tmp/apache-tomcat-9.0.108.tar.gz
         dest: /opt
         remote_src: yes
         mode: 0777
@@ -34,12 +40,12 @@
         path: "{{ item }}"
         mode: '0755'
       loop:
-        - /opt/apache-tomcat-9.0.106/bin/startup.sh
-        - /opt/apache-tomcat-9.0.106/bin/shutdown.sh
+        - /opt/apache-tomcat-9.0.108/bin/startup.sh
+        - /opt/apache-tomcat-9.0.108/bin/shutdown.sh
 
     - name: Set ownership of Tomcat directory to actimize
       ansible.builtin.file:
-        path: /opt/apache-tomcat-9.0.106
+        path: /opt/apache-tomcat-9.0.108
         owner: actimize
         group: actimize
         recurse: yes
@@ -58,11 +64,11 @@
           User=actimize
           Group=actimize
           Environment=JAVA_HOME=/opt/zulu/zulu11.48.21-ca-jdk11.0.11-linux_x64
-          Environment=CATALINA_PID=/opt/apache-tomcat-9.0.106/temp/tomcat.pid
-          Environment=CATALINA_HOME=/opt/apache-tomcat-9.0.106
-          Environment=CATALINA_BASE=/opt/apache-tomcat-9.0.106
-          ExecStart=/opt/apache-tomcat-9.0.106/bin/startup.sh
-          ExecStop=/opt/apache-tomcat-9.0.106/bin/shutdown.sh
+          Environment=CATALINA_PID=/opt/apache-tomcat-9.0.108/temp/tomcat.pid
+          Environment=CATALINA_HOME=/opt/apache-tomcat-9.0.108
+          Environment=CATALINA_BASE=/opt/apache-tomcat-9.0.108
+          ExecStart=/opt/apache-tomcat-9.0.108/bin/startup.sh
+          ExecStop=/opt/apache-tomcat-9.0.108/bin/shutdown.sh
           Restart=always
           LimitNOFILE=8192
 
@@ -72,7 +78,7 @@
 
     - name: Ensure Tomcat uses IPv4 stack
       ansible.builtin.copy:
-        dest: /opt/apache-tomcat-9.0.106/bin/setenv.sh
+        dest: /opt/apache-tomcat-9.0.108/bin/setenv.sh
         content: |
           export JAVA_OPTS="-Djava.net.preferIPv4Stack=true"
         owner: actimize
