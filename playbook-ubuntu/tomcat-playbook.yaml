@@ -99,6 +99,12 @@
         name: tomcat
         state: started
 
+    - name: Install UFW
+      ansible.builtin.apt:
+        name: ufw
+        state: present
+        update_cache: yes
+
     - name: Allow port 8080 in UFW
       ansible.builtin.ufw:
         rule: allow

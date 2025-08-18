@@ -1,8 +1,8 @@
 ---
 - name: Install JDK Zulu
-  hosts: workshop_vm
+  hosts: debian
   gather_facts: no
-  become: yes
+  become: no
   tasks:
     - name: Install Python if missing (via raw)
       ansible.builtin.raw: |
