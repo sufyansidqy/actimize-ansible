@@ -14,7 +14,6 @@ ansible_become=yes
 
 [debian:vars]
 ansible_user=actimize
-ansible_password=P@ssw0rd 
+ansible_password=P@ssw0rd
 ansible_port=2222
 ansible_become=yes
-

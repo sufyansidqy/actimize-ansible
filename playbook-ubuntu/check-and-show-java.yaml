@@ -8,10 +8,6 @@
       ansible.builtin.ping:
 
     - name: Check JAVA version
-      ansible.builtin.shell: java -version
+      ansible.builtin.command: java -version
       register: java_version
       changed_when: false
-
-    - name: Show Java Version
-      debug:
-        var: java_version.stderr_lines
