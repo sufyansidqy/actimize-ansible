@@ -1,0 +1,140 @@
+---
+- name: Install DataStax Enterprise 6.8.41 from local tarball
+  hosts: workshop_vm
+  become: true
+  gather_facts: yes
+
+  vars:
+    dse_version: "6.8.41"
+    dse_tarball: "/home/actimize/dse-6.8.41-bin.tar.gz"
+    dse_install_dir: "/opt"
+    dse_symlink: "/opt/dse"
+    dse_user: "dse"
+    dse_group: "dse"
+
+  tasks:
+
+    - name: Ensure required dependencies are installed
+      apt:
+        name:
+          - openjdk-8-jdk
+          - python3
+          - python3-apt
+          - python3-pip
+          - libaio1
+          - wget
+          - curl
+          - tar
+        state: present
+      ignore_errors: yes
+
+    - name: Install Python modules required for cqlsh
+      pip:
+        name:
+          - six
+          - cassandra-driver
+          - pyparsing
+          - geomet
+        executable: pip3
+        
+    - name: Create dse group
+      group:
+        name: "{{ dse_group }}"
+        state: present
+
+    - name: Create dse user
+      user:
+        name: "{{ dse_user }}"
+        group: "{{ dse_group }}"
+        shell: /bin/bash
+        create_home: yes
+
+    - name: Extract DSE tarball to /opt
+      unarchive:
+        src: "{{ dse_tarball }}"
+        dest: "{{ dse_install_dir }}"
+        remote_src: yes
+        creates: "{{ dse_install_dir }}/dse-{{ dse_version }}"
+
+    - name: Create symlink /opt/dse -> /opt/dse-{{ dse_version }}
+      file:
+        src: "{{ dse_install_dir }}/dse-{{ dse_version }}"
+        dest: "{{ dse_symlink }}"
+        state: link
+        force: yes
+
+    - name: Ensure ownership of dse directories
+      file:
+        path: "{{ dse_symlink }}"
+        state: directory
+        recurse: yes
+        owner: "{{ dse_user }}"
+        group: "{{ dse_group }}"
+
+    - name: Create required directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ dse_user }}"
+        group: "{{ dse_group }}"
+        mode: '0755'
+      loop:
+        - /var/lib/cassandra
+        - /var/lib/cassandra/commitlog
+        - /var/lib/cassandra/data
+        - /var/lib/cassandra/saved_caches
+        - /var/log/cassandra
+
+    - name: Add environment variables for DSE
+      copy:
+        dest: /etc/profile.d/dse.sh
+        content: |
+          export DSE_HOME={{ dse_symlink }}
+          export PATH=$DSE_HOME/bin:$PATH
+          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Create systemd service for DSE
+      copy:
+        dest: /etc/systemd/system/dse.service
+        content: |
+          [Unit]
+          Description=DataStax Enterprise
+          After=network.target
+
+          [Service]
+          Type=simple
+          ExecStart={{ dse_symlink }}/bin/dse cassandra -f
+          Restart=always
+          User={{ dse_user }}
+          Group={{ dse_group }}
+          LimitNOFILE=100000
+          Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+          Environment=DSE_HOME={{ dse_symlink }}
+          WorkingDirectory=/var/lib/cassandra
+
+          [Install]
+          WantedBy=multi-user.target
+        mode: '0644'
+
+    - name: Reload systemd daemon
+      command: systemctl daemon-reexec
+
+    - name: Enable and start DSE service
+      systemd:
+        name: dse
+        enabled: yes
+        state: started
+
+    - name: Verify DSE installation
+      shell: "{{ dse_symlink }}/bin/dse -v"
+      register: dse_version_check
+      become: false
+      become_user: "{{ dse_user }}"
+      changed_when: false
+
+    - name: Show installed DSE version
+      debug:
+        msg: "DSE installed version: {{ dse_version_check.stdout }}"
