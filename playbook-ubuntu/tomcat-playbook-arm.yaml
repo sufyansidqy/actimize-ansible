@@ -63,7 +63,7 @@
 
           User=actimize
           Group=actimize
-          Environment=JAVA_HOME=/opt/zulu/zulu11.48.21-ca-jdk11.0.11-linux_x64
+          Environment=JAVA_HOME=/opt/zulu/zulu11.78.15-ca-jdk11.0.26-linux_aarch64
           Environment=CATALINA_PID=/opt/apache-tomcat-9.0.108/temp/tomcat.pid
           Environment=CATALINA_HOME=/opt/apache-tomcat-9.0.108
           Environment=CATALINA_BASE=/opt/apache-tomcat-9.0.108

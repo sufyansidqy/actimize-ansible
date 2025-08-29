@@ -1,0 +1,650 @@
+ansible-playbook [core 2.18.6]
+  config file = /Users/sufyan/Documents/VS/actimize-ansible/ansible.cfg
+  configured module search path = ['/Users/sufyan/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /opt/homebrew/Cellar/ansible/11.6.0_1/libexec/lib/python3.13/site-packages/ansible
+  ansible collection location = /Users/sufyan/.ansible/collections:/usr/share/ansible/collections
+  executable location = /opt/homebrew/bin/ansible-playbook
+  python version = 3.13.4 (main, Jun  3 2025, 15:34:24) [Clang 17.0.0 (clang-1700.0.13.3)] (/opt/homebrew/Cellar/ansible/11.6.0_1/libexec/bin/python)
+  jinja version = 3.1.6
+  libyaml = True
+Using /Users/sufyan/Documents/VS/actimize-ansible/ansible.cfg as config file
+host_list declined parsing /Users/sufyan/Documents/VS/actimize-ansible/inventory as it did not pass its verify_file() method
+script declined parsing /Users/sufyan/Documents/VS/actimize-ansible/inventory as it did not pass its verify_file() method
+auto declined parsing /Users/sufyan/Documents/VS/actimize-ansible/inventory as it did not pass its verify_file() method
+Parsed /Users/sufyan/Documents/VS/actimize-ansible/inventory inventory source with ini plugin
+Skipping callback 'default', as we already have a stdout callback.
+Skipping callback 'minimal', as we already have a stdout callback.
+Skipping callback 'oneline', as we already have a stdout callback.
+
+PLAYBOOK: java-playbook.yaml ***************************************************
+1 plays in playbook-ubuntu/java-playbook.yaml
+
+PLAY [Install JDK Zulu] ********************************************************
+
+TASK [Ping server] *************************************************************
+task path: /Users/sufyan/Documents/VS/actimize-ansible/playbook-ubuntu/java-playbook.yaml:7
+<localhost> ESTABLISH SSH CONNECTION FOR USER: actimize
+<localhost> SSH: EXEC sshpass -d46 ssh -vvv -o StrictHostKeyChecking=no -o StrictHostKeyChecking=no -o Port=2222 -o 'User="actimize"' -o ConnectTimeout=10 localhost '/bin/sh -c '"'"'echo ~actimize && sleep 0'"'"''
+<localhost> (127, b'/home/actimize\n', b'OpenSSH_9.9p2, LibreSSL 3.3.6\r\ndebug1: Reading configuration data /etc/ssh/ssh_config\r\ndebug1: /etc/ssh/ssh_config line 21: include /etc/ssh/ssh_config.d/* matched no files\r\ndebug1: /etc/ssh/ssh_config line 54: Applying options for *\r\ndebug3: expanded UserKnownHostsFile \'~/.ssh/known_hosts\' -> \'/Users/sufyan/.ssh/known_hosts\'\r\ndebug3: expanded UserKnownHostsFile \'~/.ssh/known_hosts2\' -> \'/Users/sufyan/.ssh/known_hosts2\'\r\ndebug1: Authenticator provider $SSH_SK_PROVIDER did not resolve; disabling\r\ndebug2: resolving "localhost" port 2222\r\ndebug3: resolve_host: lookup localhost:2222\r\ndebug3: channel_clear_timeouts: clearing\r\ndebug3: ssh_connect_direct: entering\r\ndebug1: Connecting to localhost [127.0.0.1] port 2222.\r\ndebug3: set_sock_tos: set socket 5 IP_TOS 0x48\r\ndebug2: fd 5 setting O_NONBLOCK\r\ndebug1: fd 5 clearing O_NONBLOCK\r\ndebug1: Connection established.\r\ndebug3: timeout: 10000 ms remain after connect\r\ndebug1: identity file /Users/sufyan/.ssh/id_rsa type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_rsa-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ecdsa type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ecdsa-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ecdsa_sk type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ecdsa_sk-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ed25519 type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ed25519-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ed25519_sk type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ed25519_sk-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_xmss type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_xmss-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_dsa type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_dsa-cert type -1\r\ndebug1: Local version string SSH-2.0-OpenSSH_9.9\r\ndebug1: Remote protocol version 2.0, remote software version OpenSSH_10.0p2 Debian-7\r\ndebug1: compat_banner: match: OpenSSH_10.0p2 Debian-7 pat OpenSSH* compat 0x04000000\r\ndebug2: fd 5 setting O_NONBLOCK\r\ndebug1: Authenticating to localhost:2222 as \'actimize\'\r\ndebug3: put_host_port: [localhost]:2222\r\ndebug3: record_hostkey: found key type ED25519 in file /Users/sufyan/.ssh/known_hosts:13\r\ndebug3: load_hostkeys_file: loaded 1 keys from [localhost]:2222\r\ndebug1: load_hostkeys: fopen /Users/sufyan/.ssh/known_hosts2: No such file or directory\r\ndebug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory\r\ndebug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory\r\ndebug3: order_hostkeyalgs: have matching best-preference key type ssh-ed25519-cert-v01@openssh.com, using HostkeyAlgorithms verbatim\r\ndebug3: send packet: type 20\r\ndebug1: SSH2_MSG_KEXINIT sent\r\ndebug3: receive packet: type 20\r\ndebug1: SSH2_MSG_KEXINIT received\r\ndebug2: local client KEXINIT proposal\r\ndebug2: KEX algorithms: sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com\r\ndebug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256\r\ndebug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com\r\ndebug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com\r\ndebug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: compression ctos: none,zlib@openssh.com\r\ndebug2: compression stoc: none,zlib@openssh.com\r\ndebug2: languages ctos: \r\ndebug2: languages stoc: \r\ndebug2: first_kex_follows 0 \r\ndebug2: reserved 0 \r\ndebug2: peer server KEXINIT proposal\r\ndebug2: KEX algorithms: mlkem768x25519-sha256,sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,ext-info-s,kex-strict-s-v00@openssh.com\r\ndebug2: host key algorithms: rsa-sha2-512,rsa-sha2-256,ecdsa-sha2-nistp256,ssh-ed25519\r\ndebug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr\r\ndebug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr\r\ndebug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: compression ctos: none,zlib@openssh.com\r\ndebug2: compression stoc: none,zlib@openssh.com\r\ndebug2: languages ctos: \r\ndebug2: languages stoc: \r\ndebug2: first_kex_follows 0 \r\ndebug2: reserved 0 \r\ndebug3: kex_choose_conf: will use strict KEX ordering\r\ndebug1: kex: algorithm: sntrup761x25519-sha512\r\ndebug1: kex: host key algorithm: ssh-ed25519\r\ndebug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none\r\ndebug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none\r\ndebug3: send packet: type 30\r\ndebug1: expecting SSH2_MSG_KEX_ECDH_REPLY\r\ndebug3: receive packet: type 31\r\ndebug1: SSH2_MSG_KEX_ECDH_REPLY received\r\ndebug1: Server host key: ssh-ed25519 SHA256:ILyArFua+L+dLdt7utiQiiP7pS4VuDANGJ+0OEmrp28\r\ndebug3: put_host_port: [127.0.0.1]:2222\r\ndebug3: put_host_port: [localhost]:2222\r\ndebug3: record_hostkey: found key type ED25519 in file /Users/sufyan/.ssh/known_hosts:13\r\ndebug3: load_hostkeys_file: loaded 1 keys from [localhost]:2222\r\ndebug1: load_hostkeys: fopen /Users/sufyan/.ssh/known_hosts2: No such file or directory\r\ndebug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory\r\ndebug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory\r\ndebug1: Host \'[localhost]:2222\' is known and matches the ED25519 host key.\r\ndebug1: Found key in /Users/sufyan/.ssh/known_hosts:13\r\ndebug3: send packet: type 21\r\ndebug1: ssh_packet_send2_wrapped: resetting send seqnr 3\r\ndebug2: ssh_set_newkeys: mode 1\r\ndebug1: rekey out after 134217728 blocks\r\ndebug1: SSH2_MSG_NEWKEYS sent\r\ndebug1: Sending SSH2_MSG_EXT_INFO\r\ndebug3: send packet: type 7\r\ndebug1: expecting SSH2_MSG_NEWKEYS\r\ndebug3: receive packet: type 21\r\ndebug1: ssh_packet_read_poll2: resetting read seqnr 3\r\ndebug1: SSH2_MSG_NEWKEYS received\r\ndebug2: ssh_set_newkeys: mode 0\r\ndebug1: rekey in after 134217728 blocks\r\ndebug2: KEX algorithms: sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com\r\ndebug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256\r\ndebug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com\r\ndebug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com\r\ndebug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: compression ctos: none,zlib@openssh.com\r\ndebug2: compression stoc: none,zlib@openssh.com\r\ndebug2: languages ctos: \r\ndebug2: languages stoc: \r\ndebug2: first_kex_follows 0 \r\ndebug2: reserved 0 \r\ndebug3: send packet: type 5\r\ndebug3: receive packet: type 7\r\ndebug1: SSH2_MSG_EXT_INFO received\r\ndebug3: kex_input_ext_info: extension server-sig-algs\r\ndebug1: kex_ext_info_client_parse: server-sig-algs=<ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256>\r\ndebug3: kex_input_ext_info: extension publickey-hostbound@openssh.com\r\ndebug1: kex_ext_info_check_ver: publickey-hostbound@openssh.com=<0>\r\ndebug3: kex_input_ext_info: extension ping@openssh.com\r\ndebug1: kex_ext_info_check_ver: ping@openssh.com=<0>\r\ndebug3: receive packet: type 6\r\ndebug2: service_accept: ssh-userauth\r\ndebug1: SSH2_MSG_SERVICE_ACCEPT received\r\ndebug3: send packet: type 50\r\ndebug3: receive packet: type 7\r\ndebug1: SSH2_MSG_EXT_INFO received\r\ndebug3: kex_input_ext_info: extension server-sig-algs\r\ndebug1: kex_ext_info_client_parse: server-sig-algs=<ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256>\r\ndebug3: receive packet: type 51\r\ndebug1: Authentications that can continue: publickey,password\r\ndebug3: start over, passed a different list publickey,password\r\ndebug3: preferred publickey,keyboard-interactive,password\r\ndebug3: authmethod_lookup publickey\r\ndebug3: remaining preferred: keyboard-interactive,password\r\ndebug3: authmethod_is_enabled publickey\r\ndebug1: Next authentication method: publickey\r\ndebug3: ssh_get_authentication_socket_path: path \'/private/tmp/com.apple.launchd.v8REG1iHVv/Listeners\'\r\ndebug1: get_agent_identities: bound agent to hostkey\r\ndebug1: get_agent_identities: ssh_fetch_identitylist: agent contains no identities\r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_rsa \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_ecdsa \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_ecdsa_sk \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_ed25519 \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_ed25519_sk \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_xmss \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_dsa \r\ndebug2: pubkey_prepare: done\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_rsa\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_rsa: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_ecdsa\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_ecdsa: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_ecdsa_sk\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_ecdsa_sk: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_ed25519\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_ed25519: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_ed25519_sk\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_ed25519_sk: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_xmss\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_xmss: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_dsa\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_dsa: No such file or directory\r\ndebug2: we did not send a packet, disable method\r\ndebug3: authmethod_lookup password\r\ndebug3: remaining preferred: ,password\r\ndebug3: authmethod_is_enabled password\r\ndebug1: Next authentication method: password\r\ndebug3: send packet: type 50\r\ndebug2: we sent a password packet, wait for reply\r\ndebug3: receive packet: type 52\r\nAuthenticated to localhost ([127.0.0.1]:2222) using "password".\r\ndebug2: fd 7 setting O_NONBLOCK\r\ndebug2: fd 8 setting O_NONBLOCK\r\ndebug1: channel 0: new session [client-session] (inactive timeout: 0)\r\ndebug3: ssh_session2_open: channel_new: 0\r\ndebug2: channel 0: send open\r\ndebug3: send packet: type 90\r\ndebug1: Requesting no-more-sessions@openssh.com\r\ndebug3: send packet: type 80\r\ndebug1: Entering interactive session.\r\ndebug1: pledge: filesystem\r\ndebug3: client_repledge: enter\r\ndebug3: receive packet: type 80\r\ndebug1: client_input_global_request: rtype hostkeys-00@openssh.com want_reply 0\r\ndebug3: client_input_hostkeys: received RSA key SHA256:/aHIr37LiHyfSTnCU45XZGcs3RqxtI6o9wid38B6shE\r\ndebug3: client_input_hostkeys: received ECDSA key SHA256:xvhWIvAIT+NYnA0t8OcDUAM33M7TLShQQ8mYZgVPIu0\r\ndebug3: client_input_hostkeys: received ED25519 key SHA256:ILyArFua+L+dLdt7utiQiiP7pS4VuDANGJ+0OEmrp28\r\ndebug3: put_host_port: [localhost]:2222\r\ndebug1: client_input_hostkeys: searching /Users/sufyan/.ssh/known_hosts for [localhost]:2222 / (none)\r\ndebug3: hostkeys_foreach: reading file "/Users/sufyan/.ssh/known_hosts"\r\ndebug3: hostkeys_find: found ssh-ed25519 key under different name/addr at /Users/sufyan/.ssh/known_hosts:10\r\ndebug3: hostkeys_find: found ssh-rsa key under different name/addr at /Users/sufyan/.ssh/known_hosts:11\r\ndebug3: hostkeys_find: found ecdsa-sha2-nistp256 key under different name/addr at /Users/sufyan/.ssh/known_hosts:12\r\ndebug3: hostkeys_find: found ssh-ed25519 key at /Users/sufyan/.ssh/known_hosts:13\r\ndebug1: client_input_hostkeys: searching /Users/sufyan/.ssh/known_hosts2 for [localhost]:2222 / (none)\r\ndebug1: client_input_hostkeys: hostkeys file /Users/sufyan/.ssh/known_hosts2 does not exist\r\ndebug3: client_input_hostkeys: 3 server keys: 2 new, 18446744073709551615 retained, 2 incomplete match. 0 to remove\r\ndebug1: client_input_hostkeys: host key found matching a different name/address, skipping UserKnownHostsFile update\r\ndebug3: client_repledge: enter\r\ndebug3: receive packet: type 91\r\ndebug2: channel_input_open_confirmation: channel 0: callback start\r\ndebug2: fd 5 setting TCP_NODELAY\r\ndebug3: set_sock_tos: set socket 5 IP_TOS 0x20\r\ndebug2: client_session2_setup: id 0\r\ndebug1: Sending environment.\r\ndebug3: Ignored env MallocNanoZone\r\ndebug3: Ignored env USER\r\ndebug3: Ignored env COMMAND_MODE\r\ndebug3: Ignored env __CFBundleIdentifier\r\ndebug3: Ignored env PATH\r\ndebug3: Ignored env LOGNAME\r\ndebug3: Ignored env SSH_AUTH_SOCK\r\ndebug3: Ignored env HOME\r\ndebug3: Ignored env SHELL\r\ndebug3: Ignored env TMPDIR\r\ndebug3: Ignored env __CF_USER_TEXT_ENCODING\r\ndebug3: Ignored env XPC_SERVICE_NAME\r\ndebug3: Ignored env XPC_FLAGS\r\ndebug3: Ignored env ORIGINAL_XDG_CURRENT_DESKTOP\r\ndebug3: Ignored env SHLVL\r\ndebug3: Ignored env PWD\r\ndebug3: Ignored env OLDPWD\r\ndebug3: Ignored env HOMEBREW_PREFIX\r\ndebug3: Ignored env HOMEBREW_CELLAR\r\ndebug3: Ignored env HOMEBREW_REPOSITORY\r\ndebug3: Ignored env INFOPATH\r\ndebug3: Ignored env db_username\r\ndebug3: Ignored env db_password\r\ndebug3: Ignored env db_host\r\ndebug3: Ignored env email_username\r\ndebug3: Ignored env email_password\r\ndebug3: Ignored env email_host\r\ndebug3: Ignored env email_port\r\ndebug3: Ignored env k\r\ndebug3: Ignored env alias\r\ndebug3: Ignored env kgd\r\ndebug3: Ignored env TERM_PROGRAM\r\ndebug3: Ignored env TERM_PROGRAM_VERSION\r\ndebug1: channel 0: setting env LANG = "en_US.UTF-8"\r\ndebug2: channel 0: request env confirm 0\r\ndebug3: send packet: type 98\r\ndebug3: Ignored env COLORTERM\r\ndebug3: Ignored env GIT_ASKPASS\r\ndebug3: Ignored env VSCODE_GIT_ASKPASS_NODE\r\ndebug3: Ignored env VSCODE_GIT_ASKPASS_EXTRA_ARGS\r\ndebug3: Ignored env VSCODE_GIT_ASKPASS_MAIN\r\ndebug3: Ignored env VSCODE_GIT_IPC_HANDLE\r\ndebug3: Ignored env VSCODE_INJECTION\r\ndebug3: Ignored env ZDOTDIR\r\ndebug3: Ignored env USER_ZDOTDIR\r\ndebug3: Ignored env TERM\r\ndebug3: Ignored env VSCODE_PROFILE_INITIALIZED\r\ndebug3: Ignored env _\r\ndebug1: Sending command: /bin/sh -c \'echo ~actimize && sleep 0\'\r\ndebug2: channel 0: request exec confirm 1\r\ndebug3: send packet: type 98\r\ndebug3: client_repledge: enter\r\ndebug1: pledge: fork\r\ndebug2: channel_input_open_confirmation: channel 0: callback done\r\ndebug2: channel 0: open confirm rwindow 0 rmax 32768\r\ndebug2: channel 0: rcvd adjust 2097152\r\ndebug3: receive packet: type 99\r\ndebug2: channel_input_status_confirm: type 99 id 0\r\ndebug2: exec request accepted on channel 0\r\ndebug2: channel 0: rcvd ext data 29\r\ndebug3: receive packet: type 98\r\ndebug1: client_input_channel_req: channel 0 rtype exit-status reply 0\r\ndebug3: receive packet: type 98\r\ndebug1: client_input_channel_req: channel 0 rtype eow@openssh.com reply 0\r\ndebug2: channel 0: rcvd eow\r\ndebug2: chan_shutdown_read: channel 0: (i0 o0 sock -1 wfd 6 efd 8 [write])\r\ndebug2: channel 0: input open -> closed\r\n/bin/sh: 1: sleep: not found\ndebug2: channel 0: written 29 to efd 8\r\ndebug3: receive packet: type 96\r\ndebug2: channel 0: rcvd eof\r\ndebug2: channel 0: output open -> drain\r\ndebug2: channel 0: obuf empty\r\ndebug2: chan_shutdown_write: channel 0: (i3 o1 sock -1 wfd 7 efd 8 [write])\r\ndebug2: channel 0: output drain -> closed\r\ndebug3: receive packet: type 97\r\ndebug2: channel 0: rcvd close\r\ndebug3: channel 0: will not send data after close\r\ndebug2: channel 0: almost dead\r\ndebug2: channel 0: gc: notify user\r\ndebug2: channel 0: gc: user detached\r\ndebug2: channel 0: send_close2\r\ndebug2: channel 0: send close for remote id 0\r\ndebug3: send packet: type 97\r\ndebug2: channel 0: is dead\r\ndebug2: channel 0: garbage collecting\r\ndebug1: channel 0: free: client-session, nchannels 1\r\ndebug3: channel 0: status: The following connections are open:\r\n  #0 client-session (t4 [session] r0 nm0 i3/0 o3/0 e[write]/0 fd -1/-1/8 sock -1 cc -1 nc0 io 0x00/0x00)\r\n\r\ndebug3: send packet: type 1\r\nTransferred: sent 3320, received 3708 bytes, in 0.0 seconds\r\nBytes per second: sent 95878.9, received 107084.1\r\ndebug1: Exit status 127\r\n')
+<localhost> Failed to connect to the host via ssh: OpenSSH_9.9p2, LibreSSL 3.3.6
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 21: include /etc/ssh/ssh_config.d/* matched no files
+debug1: /etc/ssh/ssh_config line 54: Applying options for *
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts' -> '/Users/sufyan/.ssh/known_hosts'
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts2' -> '/Users/sufyan/.ssh/known_hosts2'
+debug1: Authenticator provider $SSH_SK_PROVIDER did not resolve; disabling
+debug2: resolving "localhost" port 2222
+debug3: resolve_host: lookup localhost:2222
+debug3: channel_clear_timeouts: clearing
+debug3: ssh_connect_direct: entering
+debug1: Connecting to localhost [127.0.0.1] port 2222.
+debug3: set_sock_tos: set socket 5 IP_TOS 0x48
+debug2: fd 5 setting O_NONBLOCK
+debug1: fd 5 clearing O_NONBLOCK
+debug1: Connection established.
+debug3: timeout: 10000 ms remain after connect
+debug1: identity file /Users/sufyan/.ssh/id_rsa type -1
+debug1: identity file /Users/sufyan/.ssh/id_rsa-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_ecdsa type -1
+debug1: identity file /Users/sufyan/.ssh/id_ecdsa-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_ecdsa_sk type -1
+debug1: identity file /Users/sufyan/.ssh/id_ecdsa_sk-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_ed25519 type -1
+debug1: identity file /Users/sufyan/.ssh/id_ed25519-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_ed25519_sk type -1
+debug1: identity file /Users/sufyan/.ssh/id_ed25519_sk-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_xmss type -1
+debug1: identity file /Users/sufyan/.ssh/id_xmss-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_dsa type -1
+debug1: identity file /Users/sufyan/.ssh/id_dsa-cert type -1
+debug1: Local version string SSH-2.0-OpenSSH_9.9
+debug1: Remote protocol version 2.0, remote software version OpenSSH_10.0p2 Debian-7
+debug1: compat_banner: match: OpenSSH_10.0p2 Debian-7 pat OpenSSH* compat 0x04000000
+debug2: fd 5 setting O_NONBLOCK
+debug1: Authenticating to localhost:2222 as 'actimize'
+debug3: put_host_port: [localhost]:2222
+debug3: record_hostkey: found key type ED25519 in file /Users/sufyan/.ssh/known_hosts:13
+debug3: load_hostkeys_file: loaded 1 keys from [localhost]:2222
+debug1: load_hostkeys: fopen /Users/sufyan/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
+debug3: order_hostkeyalgs: have matching best-preference key type ssh-ed25519-cert-v01@openssh.com, using HostkeyAlgorithms verbatim
+debug3: send packet: type 20
+debug1: SSH2_MSG_KEXINIT sent
+debug3: receive packet: type 20
+debug1: SSH2_MSG_KEXINIT received
+debug2: local client KEXINIT proposal
+debug2: KEX algorithms: sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com
+debug2: compression stoc: none,zlib@openssh.com
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug2: peer server KEXINIT proposal
+debug2: KEX algorithms: mlkem768x25519-sha256,sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,ext-info-s,kex-strict-s-v00@openssh.com
+debug2: host key algorithms: rsa-sha2-512,rsa-sha2-256,ecdsa-sha2-nistp256,ssh-ed25519
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com
+debug2: compression stoc: none,zlib@openssh.com
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug3: kex_choose_conf: will use strict KEX ordering
+debug1: kex: algorithm: sntrup761x25519-sha512
+debug1: kex: host key algorithm: ssh-ed25519
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug3: send packet: type 30
+debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+debug3: receive packet: type 31
+debug1: SSH2_MSG_KEX_ECDH_REPLY received
+debug1: Server host key: ssh-ed25519 SHA256:ILyArFua+L+dLdt7utiQiiP7pS4VuDANGJ+0OEmrp28
+debug3: put_host_port: [127.0.0.1]:2222
+debug3: put_host_port: [localhost]:2222
+debug3: record_hostkey: found key type ED25519 in file /Users/sufyan/.ssh/known_hosts:13
+debug3: load_hostkeys_file: loaded 1 keys from [localhost]:2222
+debug1: load_hostkeys: fopen /Users/sufyan/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
+debug1: Host '[localhost]:2222' is known and matches the ED25519 host key.
+debug1: Found key in /Users/sufyan/.ssh/known_hosts:13
+debug3: send packet: type 21
+debug1: ssh_packet_send2_wrapped: resetting send seqnr 3
+debug2: ssh_set_newkeys: mode 1
+debug1: rekey out after 134217728 blocks
+debug1: SSH2_MSG_NEWKEYS sent
+debug1: Sending SSH2_MSG_EXT_INFO
+debug3: send packet: type 7
+debug1: expecting SSH2_MSG_NEWKEYS
+debug3: receive packet: type 21
+debug1: ssh_packet_read_poll2: resetting read seqnr 3
+debug1: SSH2_MSG_NEWKEYS received
+debug2: ssh_set_newkeys: mode 0
+debug1: rekey in after 134217728 blocks
+debug2: KEX algorithms: sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com
+debug2: compression stoc: none,zlib@openssh.com
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug3: send packet: type 5
+debug3: receive packet: type 7
+debug1: SSH2_MSG_EXT_INFO received
+debug3: kex_input_ext_info: extension server-sig-algs
+debug1: kex_ext_info_client_parse: server-sig-algs=<ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256>
+debug3: kex_input_ext_info: extension publickey-hostbound@openssh.com
+debug1: kex_ext_info_check_ver: publickey-hostbound@openssh.com=<0>
+debug3: kex_input_ext_info: extension ping@openssh.com
+debug1: kex_ext_info_check_ver: ping@openssh.com=<0>
+debug3: receive packet: type 6
+debug2: service_accept: ssh-userauth
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+debug3: send packet: type 50
+debug3: receive packet: type 7
+debug1: SSH2_MSG_EXT_INFO received
+debug3: kex_input_ext_info: extension server-sig-algs
+debug1: kex_ext_info_client_parse: server-sig-algs=<ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256>
+debug3: receive packet: type 51
+debug1: Authentications that can continue: publickey,password
+debug3: start over, passed a different list publickey,password
+debug3: preferred publickey,keyboard-interactive,password
+debug3: authmethod_lookup publickey
+debug3: remaining preferred: keyboard-interactive,password
+debug3: authmethod_is_enabled publickey
+debug1: Next authentication method: publickey
+debug3: ssh_get_authentication_socket_path: path '/private/tmp/com.apple.launchd.v8REG1iHVv/Listeners'
+debug1: get_agent_identities: bound agent to hostkey
+debug1: get_agent_identities: ssh_fetch_identitylist: agent contains no identities
+debug1: Will attempt key: /Users/sufyan/.ssh/id_rsa 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_ecdsa 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_ecdsa_sk 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_ed25519 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_ed25519_sk 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_xmss 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_dsa 
+debug2: pubkey_prepare: done
+debug1: Trying private key: /Users/sufyan/.ssh/id_rsa
+debug3: no such identity: /Users/sufyan/.ssh/id_rsa: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_ecdsa
+debug3: no such identity: /Users/sufyan/.ssh/id_ecdsa: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_ecdsa_sk
+debug3: no such identity: /Users/sufyan/.ssh/id_ecdsa_sk: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_ed25519
+debug3: no such identity: /Users/sufyan/.ssh/id_ed25519: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_ed25519_sk
+debug3: no such identity: /Users/sufyan/.ssh/id_ed25519_sk: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_xmss
+debug3: no such identity: /Users/sufyan/.ssh/id_xmss: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_dsa
+debug3: no such identity: /Users/sufyan/.ssh/id_dsa: No such file or directory
+debug2: we did not send a packet, disable method
+debug3: authmethod_lookup password
+debug3: remaining preferred: ,password
+debug3: authmethod_is_enabled password
+debug1: Next authentication method: password
+debug3: send packet: type 50
+debug2: we sent a password packet, wait for reply
+debug3: receive packet: type 52
+Authenticated to localhost ([127.0.0.1]:2222) using "password".
+debug2: fd 7 setting O_NONBLOCK
+debug2: fd 8 setting O_NONBLOCK
+debug1: channel 0: new session [client-session] (inactive timeout: 0)
+debug3: ssh_session2_open: channel_new: 0
+debug2: channel 0: send open
+debug3: send packet: type 90
+debug1: Requesting no-more-sessions@openssh.com
+debug3: send packet: type 80
+debug1: Entering interactive session.
+debug1: pledge: filesystem
+debug3: client_repledge: enter
+debug3: receive packet: type 80
+debug1: client_input_global_request: rtype hostkeys-00@openssh.com want_reply 0
+debug3: client_input_hostkeys: received RSA key SHA256:/aHIr37LiHyfSTnCU45XZGcs3RqxtI6o9wid38B6shE
+debug3: client_input_hostkeys: received ECDSA key SHA256:xvhWIvAIT+NYnA0t8OcDUAM33M7TLShQQ8mYZgVPIu0
+debug3: client_input_hostkeys: received ED25519 key SHA256:ILyArFua+L+dLdt7utiQiiP7pS4VuDANGJ+0OEmrp28
+debug3: put_host_port: [localhost]:2222
+debug1: client_input_hostkeys: searching /Users/sufyan/.ssh/known_hosts for [localhost]:2222 / (none)
+debug3: hostkeys_foreach: reading file "/Users/sufyan/.ssh/known_hosts"
+debug3: hostkeys_find: found ssh-ed25519 key under different name/addr at /Users/sufyan/.ssh/known_hosts:10
+debug3: hostkeys_find: found ssh-rsa key under different name/addr at /Users/sufyan/.ssh/known_hosts:11
+debug3: hostkeys_find: found ecdsa-sha2-nistp256 key under different name/addr at /Users/sufyan/.ssh/known_hosts:12
+debug3: hostkeys_find: found ssh-ed25519 key at /Users/sufyan/.ssh/known_hosts:13
+debug1: client_input_hostkeys: searching /Users/sufyan/.ssh/known_hosts2 for [localhost]:2222 / (none)
+debug1: client_input_hostkeys: hostkeys file /Users/sufyan/.ssh/known_hosts2 does not exist
+debug3: client_input_hostkeys: 3 server keys: 2 new, 18446744073709551615 retained, 2 incomplete match. 0 to remove
+debug1: client_input_hostkeys: host key found matching a different name/address, skipping UserKnownHostsFile update
+debug3: client_repledge: enter
+debug3: receive packet: type 91
+debug2: channel_input_open_confirmation: channel 0: callback start
+debug2: fd 5 setting TCP_NODELAY
+debug3: set_sock_tos: set socket 5 IP_TOS 0x20
+debug2: client_session2_setup: id 0
+debug1: Sending environment.
+debug3: Ignored env MallocNanoZone
+debug3: Ignored env USER
+debug3: Ignored env COMMAND_MODE
+debug3: Ignored env __CFBundleIdentifier
+debug3: Ignored env PATH
+debug3: Ignored env LOGNAME
+debug3: Ignored env SSH_AUTH_SOCK
+debug3: Ignored env HOME
+debug3: Ignored env SHELL
+debug3: Ignored env TMPDIR
+debug3: Ignored env __CF_USER_TEXT_ENCODING
+debug3: Ignored env XPC_SERVICE_NAME
+debug3: Ignored env XPC_FLAGS
+debug3: Ignored env ORIGINAL_XDG_CURRENT_DESKTOP
+debug3: Ignored env SHLVL
+debug3: Ignored env PWD
+debug3: Ignored env OLDPWD
+debug3: Ignored env HOMEBREW_PREFIX
+debug3: Ignored env HOMEBREW_CELLAR
+debug3: Ignored env HOMEBREW_REPOSITORY
+debug3: Ignored env INFOPATH
+debug3: Ignored env db_username
+debug3: Ignored env db_password
+debug3: Ignored env db_host
+debug3: Ignored env email_username
+debug3: Ignored env email_password
+debug3: Ignored env email_host
+debug3: Ignored env email_port
+debug3: Ignored env k
+debug3: Ignored env alias
+debug3: Ignored env kgd
+debug3: Ignored env TERM_PROGRAM
+debug3: Ignored env TERM_PROGRAM_VERSION
+debug1: channel 0: setting env LANG = "en_US.UTF-8"
+debug2: channel 0: request env confirm 0
+debug3: send packet: type 98
+debug3: Ignored env COLORTERM
+debug3: Ignored env GIT_ASKPASS
+debug3: Ignored env VSCODE_GIT_ASKPASS_NODE
+debug3: Ignored env VSCODE_GIT_ASKPASS_EXTRA_ARGS
+debug3: Ignored env VSCODE_GIT_ASKPASS_MAIN
+debug3: Ignored env VSCODE_GIT_IPC_HANDLE
+debug3: Ignored env VSCODE_INJECTION
+debug3: Ignored env ZDOTDIR
+debug3: Ignored env USER_ZDOTDIR
+debug3: Ignored env TERM
+debug3: Ignored env VSCODE_PROFILE_INITIALIZED
+debug3: Ignored env _
+debug1: Sending command: /bin/sh -c 'echo ~actimize && sleep 0'
+debug2: channel 0: request exec confirm 1
+debug3: send packet: type 98
+debug3: client_repledge: enter
+debug1: pledge: fork
+debug2: channel_input_open_confirmation: channel 0: callback done
+debug2: channel 0: open confirm rwindow 0 rmax 32768
+debug2: channel 0: rcvd adjust 2097152
+debug3: receive packet: type 99
+debug2: channel_input_status_confirm: type 99 id 0
+debug2: exec request accepted on channel 0
+debug2: channel 0: rcvd ext data 29
+debug3: receive packet: type 98
+debug1: client_input_channel_req: channel 0 rtype exit-status reply 0
+debug3: receive packet: type 98
+debug1: client_input_channel_req: channel 0 rtype eow@openssh.com reply 0
+debug2: channel 0: rcvd eow
+debug2: chan_shutdown_read: channel 0: (i0 o0 sock -1 wfd 6 efd 8 [write])
+debug2: channel 0: input open -> closed
+/bin/sh: 1: sleep: not found
+debug2: channel 0: written 29 to efd 8
+debug3: receive packet: type 96
+debug2: channel 0: rcvd eof
+debug2: channel 0: output open -> drain
+debug2: channel 0: obuf empty
+debug2: chan_shutdown_write: channel 0: (i3 o1 sock -1 wfd 7 efd 8 [write])
+debug2: channel 0: output drain -> closed
+debug3: receive packet: type 97
+debug2: channel 0: rcvd close
+debug3: channel 0: will not send data after close
+debug2: channel 0: almost dead
+debug2: channel 0: gc: notify user
+debug2: channel 0: gc: user detached
+debug2: channel 0: send_close2
+debug2: channel 0: send close for remote id 0
+debug3: send packet: type 97
+debug2: channel 0: is dead
+debug2: channel 0: garbage collecting
+debug1: channel 0: free: client-session, nchannels 1
+debug3: channel 0: status: The following connections are open:
+  #0 client-session (t4 [session] r0 nm0 i3/0 o3/0 e[write]/0 fd -1/-1/8 sock -1 cc -1 nc0 io 0x00/0x00)
+
+debug3: send packet: type 1
+Transferred: sent 3320, received 3708 bytes, in 0.0 seconds
+Bytes per second: sent 95878.9, received 107084.1
+debug1: Exit status 127
+<localhost> ESTABLISH SSH CONNECTION FOR USER: actimize
+<localhost> SSH: EXEC sshpass -d46 ssh -vvv -o StrictHostKeyChecking=no -o StrictHostKeyChecking=no -o Port=2222 -o 'User="actimize"' -o ConnectTimeout=10 localhost '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/actimize/.ansible/tmp `"&& mkdir "` echo /home/actimize/.ansible/tmp/ansible-tmp-1755744480.0202901-4957-153316184053187 `" && echo ansible-tmp-1755744480.0202901-4957-153316184053187="` echo /home/actimize/.ansible/tmp/ansible-tmp-1755744480.0202901-4957-153316184053187 `" ) && sleep 0'"'"''
+<localhost> (127, b'', b'OpenSSH_9.9p2, LibreSSL 3.3.6\r\ndebug1: Reading configuration data /etc/ssh/ssh_config\r\ndebug1: /etc/ssh/ssh_config line 21: include /etc/ssh/ssh_config.d/* matched no files\r\ndebug1: /etc/ssh/ssh_config line 54: Applying options for *\r\ndebug3: expanded UserKnownHostsFile \'~/.ssh/known_hosts\' -> \'/Users/sufyan/.ssh/known_hosts\'\r\ndebug3: expanded UserKnownHostsFile \'~/.ssh/known_hosts2\' -> \'/Users/sufyan/.ssh/known_hosts2\'\r\ndebug1: Authenticator provider $SSH_SK_PROVIDER did not resolve; disabling\r\ndebug2: resolving "localhost" port 2222\r\ndebug3: resolve_host: lookup localhost:2222\r\ndebug3: channel_clear_timeouts: clearing\r\ndebug3: ssh_connect_direct: entering\r\ndebug1: Connecting to localhost [127.0.0.1] port 2222.\r\ndebug3: set_sock_tos: set socket 5 IP_TOS 0x48\r\ndebug2: fd 5 setting O_NONBLOCK\r\ndebug1: fd 5 clearing O_NONBLOCK\r\ndebug1: Connection established.\r\ndebug3: timeout: 10000 ms remain after connect\r\ndebug1: identity file /Users/sufyan/.ssh/id_rsa type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_rsa-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ecdsa type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ecdsa-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ecdsa_sk type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ecdsa_sk-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ed25519 type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ed25519-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ed25519_sk type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_ed25519_sk-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_xmss type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_xmss-cert type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_dsa type -1\r\ndebug1: identity file /Users/sufyan/.ssh/id_dsa-cert type -1\r\ndebug1: Local version string SSH-2.0-OpenSSH_9.9\r\ndebug1: Remote protocol version 2.0, remote software version OpenSSH_10.0p2 Debian-7\r\ndebug1: compat_banner: match: OpenSSH_10.0p2 Debian-7 pat OpenSSH* compat 0x04000000\r\ndebug2: fd 5 setting O_NONBLOCK\r\ndebug1: Authenticating to localhost:2222 as \'actimize\'\r\ndebug3: put_host_port: [localhost]:2222\r\ndebug3: record_hostkey: found key type ED25519 in file /Users/sufyan/.ssh/known_hosts:13\r\ndebug3: load_hostkeys_file: loaded 1 keys from [localhost]:2222\r\ndebug1: load_hostkeys: fopen /Users/sufyan/.ssh/known_hosts2: No such file or directory\r\ndebug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory\r\ndebug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory\r\ndebug3: order_hostkeyalgs: have matching best-preference key type ssh-ed25519-cert-v01@openssh.com, using HostkeyAlgorithms verbatim\r\ndebug3: send packet: type 20\r\ndebug1: SSH2_MSG_KEXINIT sent\r\ndebug3: receive packet: type 20\r\ndebug1: SSH2_MSG_KEXINIT received\r\ndebug2: local client KEXINIT proposal\r\ndebug2: KEX algorithms: sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com\r\ndebug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256\r\ndebug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com\r\ndebug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com\r\ndebug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: compression ctos: none,zlib@openssh.com\r\ndebug2: compression stoc: none,zlib@openssh.com\r\ndebug2: languages ctos: \r\ndebug2: languages stoc: \r\ndebug2: first_kex_follows 0 \r\ndebug2: reserved 0 \r\ndebug2: peer server KEXINIT proposal\r\ndebug2: KEX algorithms: mlkem768x25519-sha256,sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,ext-info-s,kex-strict-s-v00@openssh.com\r\ndebug2: host key algorithms: rsa-sha2-512,rsa-sha2-256,ecdsa-sha2-nistp256,ssh-ed25519\r\ndebug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr\r\ndebug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr\r\ndebug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: compression ctos: none,zlib@openssh.com\r\ndebug2: compression stoc: none,zlib@openssh.com\r\ndebug2: languages ctos: \r\ndebug2: languages stoc: \r\ndebug2: first_kex_follows 0 \r\ndebug2: reserved 0 \r\ndebug3: kex_choose_conf: will use strict KEX ordering\r\ndebug1: kex: algorithm: sntrup761x25519-sha512\r\ndebug1: kex: host key algorithm: ssh-ed25519\r\ndebug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none\r\ndebug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none\r\ndebug3: send packet: type 30\r\ndebug1: expecting SSH2_MSG_KEX_ECDH_REPLY\r\ndebug3: receive packet: type 31\r\ndebug1: SSH2_MSG_KEX_ECDH_REPLY received\r\ndebug1: Server host key: ssh-ed25519 SHA256:ILyArFua+L+dLdt7utiQiiP7pS4VuDANGJ+0OEmrp28\r\ndebug3: put_host_port: [127.0.0.1]:2222\r\ndebug3: put_host_port: [localhost]:2222\r\ndebug3: record_hostkey: found key type ED25519 in file /Users/sufyan/.ssh/known_hosts:13\r\ndebug3: load_hostkeys_file: loaded 1 keys from [localhost]:2222\r\ndebug1: load_hostkeys: fopen /Users/sufyan/.ssh/known_hosts2: No such file or directory\r\ndebug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory\r\ndebug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory\r\ndebug1: Host \'[localhost]:2222\' is known and matches the ED25519 host key.\r\ndebug1: Found key in /Users/sufyan/.ssh/known_hosts:13\r\ndebug3: send packet: type 21\r\ndebug1: ssh_packet_send2_wrapped: resetting send seqnr 3\r\ndebug2: ssh_set_newkeys: mode 1\r\ndebug1: rekey out after 134217728 blocks\r\ndebug1: SSH2_MSG_NEWKEYS sent\r\ndebug1: Sending SSH2_MSG_EXT_INFO\r\ndebug3: send packet: type 7\r\ndebug1: expecting SSH2_MSG_NEWKEYS\r\ndebug3: receive packet: type 21\r\ndebug1: ssh_packet_read_poll2: resetting read seqnr 3\r\ndebug1: SSH2_MSG_NEWKEYS received\r\ndebug2: ssh_set_newkeys: mode 0\r\ndebug1: rekey in after 134217728 blocks\r\ndebug2: KEX algorithms: sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com\r\ndebug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256\r\ndebug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com\r\ndebug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com\r\ndebug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: compression ctos: none,zlib@openssh.com\r\ndebug2: compression stoc: none,zlib@openssh.com\r\ndebug2: languages ctos: \r\ndebug2: languages stoc: \r\ndebug2: first_kex_follows 0 \r\ndebug2: reserved 0 \r\ndebug3: send packet: type 5\r\ndebug3: receive packet: type 7\r\ndebug1: SSH2_MSG_EXT_INFO received\r\ndebug3: kex_input_ext_info: extension server-sig-algs\r\ndebug1: kex_ext_info_client_parse: server-sig-algs=<ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256>\r\ndebug3: kex_input_ext_info: extension publickey-hostbound@openssh.com\r\ndebug1: kex_ext_info_check_ver: publickey-hostbound@openssh.com=<0>\r\ndebug3: kex_input_ext_info: extension ping@openssh.com\r\ndebug1: kex_ext_info_check_ver: ping@openssh.com=<0>\r\ndebug3: receive packet: type 6\r\ndebug2: service_accept: ssh-userauth\r\ndebug1: SSH2_MSG_SERVICE_ACCEPT received\r\ndebug3: send packet: type 50\r\ndebug3: receive packet: type 7\r\ndebug1: SSH2_MSG_EXT_INFO received\r\ndebug3: kex_input_ext_info: extension server-sig-algs\r\ndebug1: kex_ext_info_client_parse: server-sig-algs=<ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256>\r\ndebug3: receive packet: type 51\r\ndebug1: Authentications that can continue: publickey,password\r\ndebug3: start over, passed a different list publickey,password\r\ndebug3: preferred publickey,keyboard-interactive,password\r\ndebug3: authmethod_lookup publickey\r\ndebug3: remaining preferred: keyboard-interactive,password\r\ndebug3: authmethod_is_enabled publickey\r\ndebug1: Next authentication method: publickey\r\ndebug3: ssh_get_authentication_socket_path: path \'/private/tmp/com.apple.launchd.v8REG1iHVv/Listeners\'\r\ndebug1: get_agent_identities: bound agent to hostkey\r\ndebug1: get_agent_identities: ssh_fetch_identitylist: agent contains no identities\r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_rsa \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_ecdsa \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_ecdsa_sk \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_ed25519 \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_ed25519_sk \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_xmss \r\ndebug1: Will attempt key: /Users/sufyan/.ssh/id_dsa \r\ndebug2: pubkey_prepare: done\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_rsa\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_rsa: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_ecdsa\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_ecdsa: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_ecdsa_sk\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_ecdsa_sk: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_ed25519\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_ed25519: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_ed25519_sk\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_ed25519_sk: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_xmss\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_xmss: No such file or directory\r\ndebug1: Trying private key: /Users/sufyan/.ssh/id_dsa\r\ndebug3: no such identity: /Users/sufyan/.ssh/id_dsa: No such file or directory\r\ndebug2: we did not send a packet, disable method\r\ndebug3: authmethod_lookup password\r\ndebug3: remaining preferred: ,password\r\ndebug3: authmethod_is_enabled password\r\ndebug1: Next authentication method: password\r\ndebug3: send packet: type 50\r\ndebug2: we sent a password packet, wait for reply\r\ndebug3: receive packet: type 52\r\nAuthenticated to localhost ([127.0.0.1]:2222) using "password".\r\ndebug2: fd 7 setting O_NONBLOCK\r\ndebug2: fd 8 setting O_NONBLOCK\r\ndebug1: channel 0: new session [client-session] (inactive timeout: 0)\r\ndebug3: ssh_session2_open: channel_new: 0\r\ndebug2: channel 0: send open\r\ndebug3: send packet: type 90\r\ndebug1: Requesting no-more-sessions@openssh.com\r\ndebug3: send packet: type 80\r\ndebug1: Entering interactive session.\r\ndebug1: pledge: filesystem\r\ndebug3: client_repledge: enter\r\ndebug3: receive packet: type 80\r\ndebug1: client_input_global_request: rtype hostkeys-00@openssh.com want_reply 0\r\ndebug3: client_input_hostkeys: received RSA key SHA256:/aHIr37LiHyfSTnCU45XZGcs3RqxtI6o9wid38B6shE\r\ndebug3: client_input_hostkeys: received ECDSA key SHA256:xvhWIvAIT+NYnA0t8OcDUAM33M7TLShQQ8mYZgVPIu0\r\ndebug3: client_input_hostkeys: received ED25519 key SHA256:ILyArFua+L+dLdt7utiQiiP7pS4VuDANGJ+0OEmrp28\r\ndebug3: put_host_port: [localhost]:2222\r\ndebug1: client_input_hostkeys: searching /Users/sufyan/.ssh/known_hosts for [localhost]:2222 / (none)\r\ndebug3: hostkeys_foreach: reading file "/Users/sufyan/.ssh/known_hosts"\r\ndebug3: hostkeys_find: found ssh-ed25519 key under different name/addr at /Users/sufyan/.ssh/known_hosts:10\r\ndebug3: hostkeys_find: found ssh-rsa key under different name/addr at /Users/sufyan/.ssh/known_hosts:11\r\ndebug3: hostkeys_find: found ecdsa-sha2-nistp256 key under different name/addr at /Users/sufyan/.ssh/known_hosts:12\r\ndebug3: hostkeys_find: found ssh-ed25519 key at /Users/sufyan/.ssh/known_hosts:13\r\ndebug1: client_input_hostkeys: searching /Users/sufyan/.ssh/known_hosts2 for [localhost]:2222 / (none)\r\ndebug1: client_input_hostkeys: hostkeys file /Users/sufyan/.ssh/known_hosts2 does not exist\r\ndebug3: client_input_hostkeys: 3 server keys: 2 new, 18446744073709551615 retained, 2 incomplete match. 0 to remove\r\ndebug1: client_input_hostkeys: host key found matching a different name/address, skipping UserKnownHostsFile update\r\ndebug3: client_repledge: enter\r\ndebug3: receive packet: type 91\r\ndebug2: channel_input_open_confirmation: channel 0: callback start\r\ndebug2: fd 5 setting TCP_NODELAY\r\ndebug3: set_sock_tos: set socket 5 IP_TOS 0x20\r\ndebug2: client_session2_setup: id 0\r\ndebug1: Sending environment.\r\ndebug3: Ignored env MallocNanoZone\r\ndebug3: Ignored env USER\r\ndebug3: Ignored env COMMAND_MODE\r\ndebug3: Ignored env __CFBundleIdentifier\r\ndebug3: Ignored env PATH\r\ndebug3: Ignored env LOGNAME\r\ndebug3: Ignored env SSH_AUTH_SOCK\r\ndebug3: Ignored env HOME\r\ndebug3: Ignored env SHELL\r\ndebug3: Ignored env TMPDIR\r\ndebug3: Ignored env __CF_USER_TEXT_ENCODING\r\ndebug3: Ignored env XPC_SERVICE_NAME\r\ndebug3: Ignored env XPC_FLAGS\r\ndebug3: Ignored env ORIGINAL_XDG_CURRENT_DESKTOP\r\ndebug3: Ignored env SHLVL\r\ndebug3: Ignored env PWD\r\ndebug3: Ignored env OLDPWD\r\ndebug3: Ignored env HOMEBREW_PREFIX\r\ndebug3: Ignored env HOMEBREW_CELLAR\r\ndebug3: Ignored env HOMEBREW_REPOSITORY\r\ndebug3: Ignored env INFOPATH\r\ndebug3: Ignored env db_username\r\ndebug3: Ignored env db_password\r\ndebug3: Ignored env db_host\r\ndebug3: Ignored env email_username\r\ndebug3: Ignored env email_password\r\ndebug3: Ignored env email_host\r\ndebug3: Ignored env email_port\r\ndebug3: Ignored env k\r\ndebug3: Ignored env alias\r\ndebug3: Ignored env kgd\r\ndebug3: Ignored env TERM_PROGRAM\r\ndebug3: Ignored env TERM_PROGRAM_VERSION\r\ndebug1: channel 0: setting env LANG = "en_US.UTF-8"\r\ndebug2: channel 0: request env confirm 0\r\ndebug3: send packet: type 98\r\ndebug3: Ignored env COLORTERM\r\ndebug3: Ignored env GIT_ASKPASS\r\ndebug3: Ignored env VSCODE_GIT_ASKPASS_NODE\r\ndebug3: Ignored env VSCODE_GIT_ASKPASS_EXTRA_ARGS\r\ndebug3: Ignored env VSCODE_GIT_ASKPASS_MAIN\r\ndebug3: Ignored env VSCODE_GIT_IPC_HANDLE\r\ndebug3: Ignored env VSCODE_INJECTION\r\ndebug3: Ignored env ZDOTDIR\r\ndebug3: Ignored env USER_ZDOTDIR\r\ndebug3: Ignored env TERM\r\ndebug3: Ignored env VSCODE_PROFILE_INITIALIZED\r\ndebug3: Ignored env _\r\ndebug1: Sending command: /bin/sh -c \'( umask 77 && mkdir -p "` echo /home/actimize/.ansible/tmp `"&& mkdir "` echo /home/actimize/.ansible/tmp/ansible-tmp-1755744480.0202901-4957-153316184053187 `" && echo ansible-tmp-1755744480.0202901-4957-153316184053187="` echo /home/actimize/.ansible/tmp/ansible-tmp-1755744480.0202901-4957-153316184053187 `" ) && sleep 0\'\r\ndebug2: channel 0: request exec confirm 1\r\ndebug3: send packet: type 98\r\ndebug3: client_repledge: enter\r\ndebug1: pledge: fork\r\ndebug2: channel_input_open_confirmation: channel 0: callback done\r\ndebug2: channel 0: open confirm rwindow 0 rmax 32768\r\ndebug2: channel 0: rcvd adjust 2097152\r\ndebug3: receive packet: type 99\r\ndebug2: channel_input_status_confirm: type 99 id 0\r\ndebug2: exec request accepted on channel 0\r\ndebug2: channel 0: rcvd ext data 12\r\n/bin/sh: 1: debug2: channel 0: written 12 to efd 8\r\ndebug2: channel 0: rcvd ext data 17\r\nmkdir: not found\ndebug2: channel 0: written 17 to efd 8\r\ndebug3: receive packet: type 96\r\ndebug2: channel 0: rcvd eof\r\ndebug2: channel 0: output open -> drain\r\ndebug2: channel 0: obuf empty\r\ndebug2: chan_shutdown_write: channel 0: (i0 o1 sock -1 wfd 7 efd 8 [write])\r\ndebug2: channel 0: output drain -> closed\r\ndebug3: receive packet: type 98\r\ndebug1: client_input_channel_req: channel 0 rtype exit-status reply 0\r\ndebug3: receive packet: type 98\r\ndebug1: client_input_channel_req: channel 0 rtype eow@openssh.com reply 0\r\ndebug2: channel 0: rcvd eow\r\ndebug2: chan_shutdown_read: channel 0: (i0 o3 sock -1 wfd 6 efd 8 [write])\r\ndebug2: channel 0: input open -> closed\r\ndebug3: receive packet: type 97\r\ndebug2: channel 0: rcvd close\r\ndebug3: channel 0: will not send data after close\r\ndebug2: channel 0: almost dead\r\ndebug2: channel 0: gc: notify user\r\ndebug2: channel 0: gc: user detached\r\ndebug2: channel 0: send_close2\r\ndebug2: channel 0: send close for remote id 0\r\ndebug3: send packet: type 97\r\ndebug2: channel 0: is dead\r\ndebug2: channel 0: garbage collecting\r\ndebug1: channel 0: free: client-session, nchannels 1\r\ndebug3: channel 0: status: The following connections are open:\r\n  #0 client-session (t4 [session] r0 nm0 i3/0 o3/0 e[write]/0 fd -1/-1/8 sock -1 cc -1 nc0 io 0x00/0x00)\r\n\r\ndebug3: send packet: type 1\r\nTransferred: sent 3616, received 3700 bytes, in 0.0 seconds\r\nBytes per second: sent 140541.8, received 143806.6\r\ndebug1: Exit status 127\r\n')
+<localhost> Failed to connect to the host via ssh: OpenSSH_9.9p2, LibreSSL 3.3.6
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 21: include /etc/ssh/ssh_config.d/* matched no files
+debug1: /etc/ssh/ssh_config line 54: Applying options for *
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts' -> '/Users/sufyan/.ssh/known_hosts'
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts2' -> '/Users/sufyan/.ssh/known_hosts2'
+debug1: Authenticator provider $SSH_SK_PROVIDER did not resolve; disabling
+debug2: resolving "localhost" port 2222
+debug3: resolve_host: lookup localhost:2222
+debug3: channel_clear_timeouts: clearing
+debug3: ssh_connect_direct: entering
+debug1: Connecting to localhost [127.0.0.1] port 2222.
+debug3: set_sock_tos: set socket 5 IP_TOS 0x48
+debug2: fd 5 setting O_NONBLOCK
+debug1: fd 5 clearing O_NONBLOCK
+debug1: Connection established.
+debug3: timeout: 10000 ms remain after connect
+debug1: identity file /Users/sufyan/.ssh/id_rsa type -1
+debug1: identity file /Users/sufyan/.ssh/id_rsa-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_ecdsa type -1
+debug1: identity file /Users/sufyan/.ssh/id_ecdsa-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_ecdsa_sk type -1
+debug1: identity file /Users/sufyan/.ssh/id_ecdsa_sk-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_ed25519 type -1
+debug1: identity file /Users/sufyan/.ssh/id_ed25519-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_ed25519_sk type -1
+debug1: identity file /Users/sufyan/.ssh/id_ed25519_sk-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_xmss type -1
+debug1: identity file /Users/sufyan/.ssh/id_xmss-cert type -1
+debug1: identity file /Users/sufyan/.ssh/id_dsa type -1
+debug1: identity file /Users/sufyan/.ssh/id_dsa-cert type -1
+debug1: Local version string SSH-2.0-OpenSSH_9.9
+debug1: Remote protocol version 2.0, remote software version OpenSSH_10.0p2 Debian-7
+debug1: compat_banner: match: OpenSSH_10.0p2 Debian-7 pat OpenSSH* compat 0x04000000
+debug2: fd 5 setting O_NONBLOCK
+debug1: Authenticating to localhost:2222 as 'actimize'
+debug3: put_host_port: [localhost]:2222
+debug3: record_hostkey: found key type ED25519 in file /Users/sufyan/.ssh/known_hosts:13
+debug3: load_hostkeys_file: loaded 1 keys from [localhost]:2222
+debug1: load_hostkeys: fopen /Users/sufyan/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
+debug3: order_hostkeyalgs: have matching best-preference key type ssh-ed25519-cert-v01@openssh.com, using HostkeyAlgorithms verbatim
+debug3: send packet: type 20
+debug1: SSH2_MSG_KEXINIT sent
+debug3: receive packet: type 20
+debug1: SSH2_MSG_KEXINIT received
+debug2: local client KEXINIT proposal
+debug2: KEX algorithms: sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com
+debug2: compression stoc: none,zlib@openssh.com
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug2: peer server KEXINIT proposal
+debug2: KEX algorithms: mlkem768x25519-sha256,sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,ext-info-s,kex-strict-s-v00@openssh.com
+debug2: host key algorithms: rsa-sha2-512,rsa-sha2-256,ecdsa-sha2-nistp256,ssh-ed25519
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com
+debug2: compression stoc: none,zlib@openssh.com
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug3: kex_choose_conf: will use strict KEX ordering
+debug1: kex: algorithm: sntrup761x25519-sha512
+debug1: kex: host key algorithm: ssh-ed25519
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug3: send packet: type 30
+debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+debug3: receive packet: type 31
+debug1: SSH2_MSG_KEX_ECDH_REPLY received
+debug1: Server host key: ssh-ed25519 SHA256:ILyArFua+L+dLdt7utiQiiP7pS4VuDANGJ+0OEmrp28
+debug3: put_host_port: [127.0.0.1]:2222
+debug3: put_host_port: [localhost]:2222
+debug3: record_hostkey: found key type ED25519 in file /Users/sufyan/.ssh/known_hosts:13
+debug3: load_hostkeys_file: loaded 1 keys from [localhost]:2222
+debug1: load_hostkeys: fopen /Users/sufyan/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
+debug1: Host '[localhost]:2222' is known and matches the ED25519 host key.
+debug1: Found key in /Users/sufyan/.ssh/known_hosts:13
+debug3: send packet: type 21
+debug1: ssh_packet_send2_wrapped: resetting send seqnr 3
+debug2: ssh_set_newkeys: mode 1
+debug1: rekey out after 134217728 blocks
+debug1: SSH2_MSG_NEWKEYS sent
+debug1: Sending SSH2_MSG_EXT_INFO
+debug3: send packet: type 7
+debug1: expecting SSH2_MSG_NEWKEYS
+debug3: receive packet: type 21
+debug1: ssh_packet_read_poll2: resetting read seqnr 3
+debug1: SSH2_MSG_NEWKEYS received
+debug2: ssh_set_newkeys: mode 0
+debug1: rekey in after 134217728 blocks
+debug2: KEX algorithms: sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com
+debug2: compression stoc: none,zlib@openssh.com
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug3: send packet: type 5
+debug3: receive packet: type 7
+debug1: SSH2_MSG_EXT_INFO received
+debug3: kex_input_ext_info: extension server-sig-algs
+debug1: kex_ext_info_client_parse: server-sig-algs=<ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256>
+debug3: kex_input_ext_info: extension publickey-hostbound@openssh.com
+debug1: kex_ext_info_check_ver: publickey-hostbound@openssh.com=<0>
+debug3: kex_input_ext_info: extension ping@openssh.com
+debug1: kex_ext_info_check_ver: ping@openssh.com=<0>
+debug3: receive packet: type 6
+debug2: service_accept: ssh-userauth
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+debug3: send packet: type 50
+debug3: receive packet: type 7
+debug1: SSH2_MSG_EXT_INFO received
+debug3: kex_input_ext_info: extension server-sig-algs
+debug1: kex_ext_info_client_parse: server-sig-algs=<ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256>
+debug3: receive packet: type 51
+debug1: Authentications that can continue: publickey,password
+debug3: start over, passed a different list publickey,password
+debug3: preferred publickey,keyboard-interactive,password
+debug3: authmethod_lookup publickey
+debug3: remaining preferred: keyboard-interactive,password
+debug3: authmethod_is_enabled publickey
+debug1: Next authentication method: publickey
+debug3: ssh_get_authentication_socket_path: path '/private/tmp/com.apple.launchd.v8REG1iHVv/Listeners'
+debug1: get_agent_identities: bound agent to hostkey
+debug1: get_agent_identities: ssh_fetch_identitylist: agent contains no identities
+debug1: Will attempt key: /Users/sufyan/.ssh/id_rsa 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_ecdsa 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_ecdsa_sk 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_ed25519 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_ed25519_sk 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_xmss 
+debug1: Will attempt key: /Users/sufyan/.ssh/id_dsa 
+debug2: pubkey_prepare: done
+debug1: Trying private key: /Users/sufyan/.ssh/id_rsa
+debug3: no such identity: /Users/sufyan/.ssh/id_rsa: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_ecdsa
+debug3: no such identity: /Users/sufyan/.ssh/id_ecdsa: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_ecdsa_sk
+debug3: no such identity: /Users/sufyan/.ssh/id_ecdsa_sk: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_ed25519
+debug3: no such identity: /Users/sufyan/.ssh/id_ed25519: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_ed25519_sk
+debug3: no such identity: /Users/sufyan/.ssh/id_ed25519_sk: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_xmss
+debug3: no such identity: /Users/sufyan/.ssh/id_xmss: No such file or directory
+debug1: Trying private key: /Users/sufyan/.ssh/id_dsa
+debug3: no such identity: /Users/sufyan/.ssh/id_dsa: No such file or directory
+debug2: we did not send a packet, disable method
+debug3: authmethod_lookup password
+debug3: remaining preferred: ,password
+debug3: authmethod_is_enabled password
+debug1: Next authentication method: password
+debug3: send packet: type 50
+debug2: we sent a password packet, wait for reply
+debug3: receive packet: type 52
+Authenticated to localhost ([127.0.0.1]:2222) using "password".
+debug2: fd 7 setting O_NONBLOCK
+debug2: fd 8 setting O_NONBLOCK
+debug1: channel 0: new session [client-session] (inactive timeout: 0)
+debug3: ssh_session2_open: channel_new: 0
+debug2: channel 0: send open
+debug3: send packet: type 90
+debug1: Requesting no-more-sessions@openssh.com
+debug3: send packet: type 80
+debug1: Entering interactive session.
+debug1: pledge: filesystem
+debug3: client_repledge: enter
+debug3: receive packet: type 80
+debug1: client_input_global_request: rtype hostkeys-00@openssh.com want_reply 0
+debug3: client_input_hostkeys: received RSA key SHA256:/aHIr37LiHyfSTnCU45XZGcs3RqxtI6o9wid38B6shE
+debug3: client_input_hostkeys: received ECDSA key SHA256:xvhWIvAIT+NYnA0t8OcDUAM33M7TLShQQ8mYZgVPIu0
+debug3: client_input_hostkeys: received ED25519 key SHA256:ILyArFua+L+dLdt7utiQiiP7pS4VuDANGJ+0OEmrp28
+debug3: put_host_port: [localhost]:2222
+debug1: client_input_hostkeys: searching /Users/sufyan/.ssh/known_hosts for [localhost]:2222 / (none)
+debug3: hostkeys_foreach: reading file "/Users/sufyan/.ssh/known_hosts"
+debug3: hostkeys_find: found ssh-ed25519 key under different name/addr at /Users/sufyan/.ssh/known_hosts:10
+debug3: hostkeys_find: found ssh-rsa key under different name/addr at /Users/sufyan/.ssh/known_hosts:11
+debug3: hostkeys_find: found ecdsa-sha2-nistp256 key under different name/addr at /Users/sufyan/.ssh/known_hosts:12
+debug3: hostkeys_find: found ssh-ed25519 key at /Users/sufyan/.ssh/known_hosts:13
+debug1: client_input_hostkeys: searching /Users/sufyan/.ssh/known_hosts2 for [localhost]:2222 / (none)
+debug1: client_input_hostkeys: hostkeys file /Users/sufyan/.ssh/known_hosts2 does not exist
+debug3: client_input_hostkeys: 3 server keys: 2 new, 18446744073709551615 retained, 2 incomplete match. 0 to remove
+debug1: client_input_hostkeys: host key found matching a different name/address, skipping UserKnownHostsFile update
+debug3: client_repledge: enter
+debug3: receive packet: type 91
+debug2: channel_input_open_confirmation: channel 0: callback start
+debug2: fd 5 setting TCP_NODELAY
+debug3: set_sock_tos: set socket 5 IP_TOS 0x20
+debug2: client_session2_setup: id 0
+debug1: Sending environment.
+debug3: Ignored env MallocNanoZone
+debug3: Ignored env USER
+debug3: Ignored env COMMAND_MODE
+debug3: Ignored env __CFBundleIdentifier
+debug3: Ignored env PATH
+debug3: Ignored env LOGNAME
+debug3: Ignored env SSH_AUTH_SOCK
+debug3: Ignored env HOME
+debug3: Ignored env SHELL
+debug3: Ignored env TMPDIR
+debug3: Ignored env __CF_USER_TEXT_ENCODING
+debug3: Ignored env XPC_SERVICE_NAME
+debug3: Ignored env XPC_FLAGS
+debug3: Ignored env ORIGINAL_XDG_CURRENT_DESKTOP
+debug3: Ignored env SHLVL
+debug3: Ignored env PWD
+debug3: Ignored env OLDPWD
+debug3: Ignored env HOMEBREW_PREFIX
+debug3: Ignored env HOMEBREW_CELLAR
+debug3: Ignored env HOMEBREW_REPOSITORY
+debug3: Ignored env INFOPATH
+debug3: Ignored env db_username
+debug3: Ignored env db_password
+debug3: Ignored env db_host
+debug3: Ignored env email_username
+debug3: Ignored env email_password
+debug3: Ignored env email_host
+debug3: Ignored env email_port
+debug3: Ignored env k
+debug3: Ignored env alias
+debug3: Ignored env kgd
+debug3: Ignored env TERM_PROGRAM
+debug3: Ignored env TERM_PROGRAM_VERSION
+debug1: channel 0: setting env LANG = "en_US.UTF-8"
+debug2: channel 0: request env confirm 0
+debug3: send packet: type 98
+debug3: Ignored env COLORTERM
+debug3: Ignored env GIT_ASKPASS
+debug3: Ignored env VSCODE_GIT_ASKPASS_NODE
+debug3: Ignored env VSCODE_GIT_ASKPASS_EXTRA_ARGS
+debug3: Ignored env VSCODE_GIT_ASKPASS_MAIN
+debug3: Ignored env VSCODE_GIT_IPC_HANDLE
+debug3: Ignored env VSCODE_INJECTION
+debug3: Ignored env ZDOTDIR
+debug3: Ignored env USER_ZDOTDIR
+debug3: Ignored env TERM
+debug3: Ignored env VSCODE_PROFILE_INITIALIZED
+debug3: Ignored env _
+debug1: Sending command: /bin/sh -c '( umask 77 && mkdir -p "` echo /home/actimize/.ansible/tmp `"&& mkdir "` echo /home/actimize/.ansible/tmp/ansible-tmp-1755744480.0202901-4957-153316184053187 `" && echo ansible-tmp-1755744480.0202901-4957-153316184053187="` echo /home/actimize/.ansible/tmp/ansible-tmp-1755744480.0202901-4957-153316184053187 `" ) && sleep 0'
+debug2: channel 0: request exec confirm 1
+debug3: send packet: type 98
+debug3: client_repledge: enter
+debug1: pledge: fork
+debug2: channel_input_open_confirmation: channel 0: callback done
+debug2: channel 0: open confirm rwindow 0 rmax 32768
+debug2: channel 0: rcvd adjust 2097152
+debug3: receive packet: type 99
+debug2: channel_input_status_confirm: type 99 id 0
+debug2: exec request accepted on channel 0
+debug2: channel 0: rcvd ext data 12
+/bin/sh: 1: debug2: channel 0: written 12 to efd 8
+debug2: channel 0: rcvd ext data 17
+mkdir: not found
+debug2: channel 0: written 17 to efd 8
+debug3: receive packet: type 96
+debug2: channel 0: rcvd eof
+debug2: channel 0: output open -> drain
+debug2: channel 0: obuf empty
+debug2: chan_shutdown_write: channel 0: (i0 o1 sock -1 wfd 7 efd 8 [write])
+debug2: channel 0: output drain -> closed
+debug3: receive packet: type 98
+debug1: client_input_channel_req: channel 0 rtype exit-status reply 0
+debug3: receive packet: type 98
+debug1: client_input_channel_req: channel 0 rtype eow@openssh.com reply 0
+debug2: channel 0: rcvd eow
+debug2: chan_shutdown_read: channel 0: (i0 o3 sock -1 wfd 6 efd 8 [write])
+debug2: channel 0: input open -> closed
+debug3: receive packet: type 97
+debug2: channel 0: rcvd close
+debug3: channel 0: will not send data after close
+debug2: channel 0: almost dead
+debug2: channel 0: gc: notify user
+debug2: channel 0: gc: user detached
+debug2: channel 0: send_close2
+debug2: channel 0: send close for remote id 0
+debug3: send packet: type 97
+debug2: channel 0: is dead
+debug2: channel 0: garbage collecting
+debug1: channel 0: free: client-session, nchannels 1
+debug3: channel 0: status: The following connections are open:
+  #0 client-session (t4 [session] r0 nm0 i3/0 o3/0 e[write]/0 fd -1/-1/8 sock -1 cc -1 nc0 io 0x00/0x00)
+
+debug3: send packet: type 1
+Transferred: sent 3616, received 3700 bytes, in 0.0 seconds
+Bytes per second: sent 140541.8, received 143806.6
+debug1: Exit status 127
+fatal: [localhost]: UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to create temporary directory. In some cases, you may have been able to authenticate and did not have permissions on the target directory. Consider changing the remote tmp path in ansible.cfg to a path rooted in \"/tmp\", for more error information use -vvv. Failed command was: ( umask 77 && mkdir -p \"` echo /home/actimize/.ansible/tmp `\"&& mkdir \"` echo /home/actimize/.ansible/tmp/ansible-tmp-1755744480.0202901-4957-153316184053187 `\" && echo ansible-tmp-1755744480.0202901-4957-153316184053187=\"` echo /home/actimize/.ansible/tmp/ansible-tmp-1755744480.0202901-4957-153316184053187 `\" ), exited with result 127",
+    "unreachable": true
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+

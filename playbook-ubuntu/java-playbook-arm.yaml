@@ -2,7 +2,7 @@
 - name: Install JDK Zulu
   hosts: debian
   gather_facts: no
-  become: no
+  become: yes
   tasks:
     - name: Ping server
       ansible.builtin.ping:
@@ -12,10 +12,10 @@
         if ! command -v python3 >/dev/null 2>&1; then
           sudo apt update && sudo apt install -y python3
         fi
-        
+
     - name: Download Zulu OpenJDK 11
       ansible.builtin.get_url:
-        url: https://cdn.azul.com/zulu/bin/zulu11.48.21-ca-jdk11.0.11-linux_x64.tar.gz
+        url: https://cdn.azul.com/zulu/bin/zulu11.78.15-ca-jdk11.0.26-linux_aarch64.tar.gz
         dest: /tmp/zulu11.tar.gz
         mode: '0644'
         force: no
@@ -32,26 +32,19 @@
         dest: /opt/zulu
         remote_src: yes
 
-    - name: Create and set JAVA_HOME PATH in /etc/profile.d/java.sh
+    - name: Create JAVA_HOME profile script
       ansible.builtin.copy:
         dest: /etc/profile.d/java.sh
         content: |
-          export JAVA_HOME=/opt/zulu/zulu11.48.21-ca-jdk11.0.11-linux_x64
+          export JAVA_HOME=/opt/zulu/zulu11.78.15-ca-jdk11.0.26-linux_aarch64
           export PATH=$JAVA_HOME/bin:$PATH
         mode: '0755'
 
-    - name: Set JAVA_HOME in /etc/environment
-      ansible.builtin.lineinfile:
-        path: /etc/environment
-        line: 'JAVA_HOME=/opt/zulu/zulu11.48.21-ca-jdk11.0.11-linux_x64'
-        create: yes
-
-    - name: Add Java bin to PATH in /etc/environment
-      ansible.builtin.lineinfile:
-        path: /etc/environment
-        line: 'PATH="/opt/zulu/zulu11.48.21-ca-jdk11.0.11-linux_x64/bin:$PATH"'
-        insertafter: EOF
-        create: yes
+    - name: Symlink java to /usr/bin
+      ansible.builtin.file:
+        src: /opt/zulu/zulu11.78.15-ca-jdk11.0.26-linux_aarch64/bin/java
+        dest: /usr/bin/java
+        state: link
 
     - name: Check JAVA version
       ansible.builtin.command: java -version
@@ -59,5 +52,5 @@
       changed_when: false
 
     - name: Show Java Version
-      debug:
+      ansible.builtin.debug:
         var: java_version.stderr_lines

@@ -1,6 +1,6 @@
 ---
 - name: Check JDK Zulu version
-  hosts: workshop_vm
+  hosts: debian
   gather_facts: no
   become: no
   tasks:
@@ -8,10 +8,10 @@
       ansible.builtin.ping:
 
     - name: Check JAVA version
-      ansible.builtin.shell: java -version
+      ansible.builtin.command: java -version
       register: java_version
       changed_when: false
 
     - name: Show Java Version
-      debug:
+      ansible.builtin.debug:
         var: java_version.stderr_lines
